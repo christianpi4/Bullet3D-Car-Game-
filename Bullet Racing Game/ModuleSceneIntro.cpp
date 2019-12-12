@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "p2Point.h"
 
 ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
 {
@@ -17,6 +18,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -25,28 +27,39 @@ bool ModuleSceneIntro::Start()
 	const float SizeIncrement = 0.2f;
 	const float BallDistance = 0.3f;
 
-	float XPos = 0.f;
+	float XPosSphere = 3.f;
+	float XPos = 1.f;
+	float Ypos = 1.f;
 	float Size = StartingSize;
+
+	vec3 dimensions = { 1,3,1 };
+
 	Sphere* auxiliar_sphere = nullptr;
+	Cube*auxiliar_cube = nullptr;
 
 	for (int n = 0; n < SnakeLength; n++)
 	{
-		Sphere* s = new Sphere(Size);
+		/*Sphere* s = new Sphere(Size);
 		primitives.PushBack(s);
-		s->SetPos(XPos, 10.f, 2.5f);
+		s->SetPos(XPos, 3.f, 10.f);*/
 
+		Cube* c = new Cube(dimensions);
+		primitives.PushBack(c);
+		c->SetPos(XPos, 1.f, 1.f);
 		//TODO 2: Link all the spheres with your P2P constraints
 		if (primitives.Count() > 1) {
 			
-			App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
-			App->physics->AddConstraintP2P(**primitives.At(n-1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 });
-
+			//App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
+			//App->physics->AddConstraintP2P(**primitives.At(n-1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 });
+			App->physics->AddConstraintP2P(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-c->GetSize().x),(-c->GetSize().y), 0 }, btVector3{ auxiliar_cube->GetSize().x,auxiliar_cube->GetSize().y,0 });
+			App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-c->GetSize().x),(-c->GetSize().y),0 }, btVector3{ auxiliar_cube->GetSize().x,auxiliar_cube->GetSize().y,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
 		}
 
-		auxiliar_sphere = s;
-
+		/*auxiliar_sphere = s;
 		XPos += Size + Size + SizeIncrement + BallDistance;
-		Size += SizeIncrement;
+		Size += SizeIncrement;*/
+		auxiliar_cube = c;
+		XPos += XPos+BallDistance;
 	}
 
 	//TODO 4: Link some other spheres with your Hinge constraint
