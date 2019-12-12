@@ -21,7 +21,7 @@ PrimitiveTypes Primitive::GetType() const
 
 void Primitive::Update()
 {
-	body.GetTransform(&transform);
+	this->body.GetTransform(&transform);
 }
 
 // ------------------------------------------------------------
@@ -115,6 +115,8 @@ void Primitive::Scale(float x, float y, float z)
 Cube::Cube(const vec3& _size, float mass) : Primitive(), size(_size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	
+	body.SetBodyCube(this, mass);
 }
 
 vec3 Cube::GetSize() const

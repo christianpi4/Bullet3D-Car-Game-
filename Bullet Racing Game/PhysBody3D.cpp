@@ -33,6 +33,10 @@ void PhysBody3D::SetBody(Sphere* primitive, float mass)
 	SetBody(new btSphereShape(primitive->GetRadius()),
 		primitive, mass);
 }
+void PhysBody3D::SetBodyCube(Cube* primitive, float mass)
+{
+	SetBody(new btBoxShape(btVector3(primitive->GetSize().x, primitive->GetSize().y, primitive->GetSize().z)), primitive, mass);
+}
 
 bool PhysBody3D::HasBody() const
 {
@@ -50,7 +54,7 @@ void PhysBody3D::GetTransform(float* matrix) const
 	if (HasBody() == false)
 		return;
 
-	body->getWorldTransform().getOpenGLMatrix(matrix);
+	this->body->getWorldTransform().getOpenGLMatrix(matrix);
 }
 
 // ---------------------------------------------------------
