@@ -188,6 +188,19 @@ void ModulePhysics3D::AddConstraintHinge(const Primitive& bodyA, const Primitive
 
 }
 
+void ModulePhysics3D::AddSliderConstraint(const Primitive& bodyA, const Primitive& bodyB, const btTransform& frameA, const btTransform& frameB, bool linearrefereneceA){
+	
+	btSliderConstraint* slider_constraint2 = new btSliderConstraint(*bodyA.body.GetBody(), *bodyB.body.GetBody(), frameA, frameB, linearrefereneceA);
+	slider_constraint2->setLowerLinLimit(0.1);
+	slider_constraint2->setUpperLinLimit(0.2);
+	slider_constraint2->setLowerAngLimit(-0.35);
+	slider_constraint2->setUpperAngLimit(0.35);
+	   	
+	world->addConstraint(slider_constraint2);
+	slider_constraint.add(slider_constraint2);
+
+}
+
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {

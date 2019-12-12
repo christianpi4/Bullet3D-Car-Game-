@@ -38,6 +38,7 @@ public:
 	//void AddConstraintHinge(const Primitive & bodyA, const Primitive & bodyB, ...);
 	void AddConstraintHinge(const Primitive& bodyA, const Primitive& bodyB, const btVector3& pivotA, const btVector3& pivotB, btVector3& axisA, btVector3& axisB);
 
+	void AddSliderConstraint(const Primitive& bodyA, const Primitive& bodyB, const btTransform& frameA, const btTransform& frameB, bool linearrefereneceA);
 private:
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;
@@ -47,6 +48,8 @@ private:
 	DebugDrawer*						debug_draw;
 	p2List<btPoint2PointConstraint*>	p2_constraint;
 	p2List<btHingeConstraint*>			hinge_constraint;
+	p2List<btSliderConstraint*>			slider_constraint;
+
 };
 
 class DebugDrawer : public btIDebugDraw
