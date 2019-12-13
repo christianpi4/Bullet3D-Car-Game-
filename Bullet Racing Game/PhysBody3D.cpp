@@ -38,6 +38,11 @@ void PhysBody3D::SetBodyCube(Cube* primitive, float mass)
 	SetBody(new btBoxShape(btVector3(primitive->GetSize().x/2, primitive->GetSize().y/2, primitive->GetSize().z/2)), primitive, mass);
 }
 
+void PhysBody3D::SetBodyCylinder(Cylinder* primitive, float mass) {
+
+	SetBody(new btCylinderShape(btVector3(primitive->GetRadius(), primitive->GetRadius(), primitive->GetHeight()/2)), primitive, mass);
+}
+
 bool PhysBody3D::HasBody() const
 {
 	return body != nullptr;
@@ -136,4 +141,24 @@ void PhysBody3D::SetBody(btCollisionShape * shape, Primitive* parent, float mass
 	body->setUserPointer(this);
 
 	App->physics->AddBodyToWorld(body);
+}
+
+void PhysBody3D::SetSensor(bool is_sensor) {
+
+	if (this->is_sensor != is_sensor){
+
+		this->is_sensor = is_sensor;
+
+		if (is_sensor == true) {
+
+			body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+		}
+			
+		else{
+		
+			body->setCollisionFlags(body->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		
+		}
+	}
 }

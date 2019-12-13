@@ -24,6 +24,9 @@ public:
 
 	void SetBody(Sphere* primitive, float mass);
 	void SetBodyCube(Cube* primitive, float mass);
+	void SetBodyCylinder(Cylinder* primitive, float mass);
+	void SetBodyPlane(Plane* primitive, float mass);
+	void SetSensor(bool is_sensor);
 	bool HasBody() const;
 	btRigidBody* GetBody() const;
 
@@ -43,6 +46,7 @@ private:
 	btRigidBody* body;
 	btCollisionShape* colShape;
 	btDefaultMotionState* motionState;
+	bool is_sensor = false;
 public:
 	Primitive* parentPrimitive;
 	p2DynArray<Module*> collision_listeners;

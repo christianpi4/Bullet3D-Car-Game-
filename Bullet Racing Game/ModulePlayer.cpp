@@ -3,6 +3,7 @@
 #include "ModulePlayer.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
@@ -17,8 +18,8 @@ bool ModulePlayer::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	//App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	//App->camera->LookAt(vec3(0, 0, 0));
+	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	App->camera->LookAt(vec3(0, 0, 0));
 
 	////Body Car
 	//Cube* car = new Cube(vec3{ 2,0.25,3 });

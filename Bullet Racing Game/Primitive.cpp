@@ -194,6 +194,7 @@ void Sphere::InnerRender() const
 Cylinder::Cylinder(float radius, float height, float mass) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
+	body.SetBodyCylinder(this, mass);
 }
 
 float Cylinder::GetRadius() const
@@ -204,6 +205,14 @@ float Cylinder::GetRadius() const
 float Cylinder::GetHeight() const
 {
 	return height;
+}
+
+void Cylinder::SetRadius(float n_radius) {
+	radius = n_radius;
+}
+
+void Cylinder::SetHeight(float n_height) {
+	height = n_height;
 }
 
 void Cylinder::InnerRender() const
