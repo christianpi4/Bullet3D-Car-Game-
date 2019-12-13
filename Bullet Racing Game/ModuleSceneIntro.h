@@ -17,6 +17,10 @@ public:
 	update_status PostUpdate(float dt) override;
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2) override;
+	void CreateLineInX(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool in_x);
+	//void CreateLineInZ(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght);
+	void CreateDiagonal(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool in_x);
+
 
 	bool CleanUp();
 

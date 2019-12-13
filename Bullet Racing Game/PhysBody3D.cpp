@@ -35,7 +35,7 @@ void PhysBody3D::SetBody(Sphere* primitive, float mass)
 }
 void PhysBody3D::SetBodyCube(Cube* primitive, float mass)
 {
-	SetBody(new btBoxShape(btVector3(primitive->GetSize().x, primitive->GetSize().y, primitive->GetSize().z)), primitive, mass);
+	SetBody(new btBoxShape(btVector3(primitive->GetSize().x/2, primitive->GetSize().y/2, primitive->GetSize().z/2)), primitive, mass);
 }
 
 bool PhysBody3D::HasBody() const
@@ -80,6 +80,17 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	body->setWorldTransform(trans);
 	body->activate();
 }
+
+//vec3 Physbody3D::GetForward() {
+//	mat4x4 trans;
+//	body.getWorldTransform().getopenglmatrix(&trans);
+//	mat3x3 rot(trans);
+//	vec3 forward(0.f, 0.f, 1.f);
+//	forward = rot * forward;
+//	float scaleInX = vec3(trans[0], trans[4], trans[8]);
+//
+//	return forward;
+//}
 
 void PhysBody3D::SetSpeed(vec3 speed)
 {
