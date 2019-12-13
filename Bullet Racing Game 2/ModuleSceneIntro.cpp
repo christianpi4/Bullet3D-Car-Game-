@@ -61,7 +61,7 @@ void ModuleSceneIntro::DebugSpawnPrimitive(Primitive * p)
 	p->SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 	
 	//p->body.collision_listeners.PushBack(this);
-	p->body.Push(-App->camera->Z * 1000.f);
+	//p->body.Push(-App->camera->Z * 1000.f);
 }
 
 // Update
