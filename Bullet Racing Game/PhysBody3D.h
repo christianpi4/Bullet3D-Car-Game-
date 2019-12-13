@@ -33,6 +33,7 @@ public:
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
+	const vec3 GetPos() const;
 	//to do camera
 	//vec3 GetForward();
 

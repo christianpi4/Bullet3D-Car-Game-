@@ -4,7 +4,7 @@
 #include "glmath.h"
 
 class btRaycastVehicle;
-struct PhysBody3D;
+class PhysBody3D;
 
 struct Wheel
 {
@@ -55,6 +55,7 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
+	vec3 ForwardVector() const;
 public:
 
 	VehicleInfo info;

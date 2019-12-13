@@ -98,7 +98,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 100);
+	vehicle->SetPos(100, 12, 100);
 
 	return true;
 
@@ -153,6 +153,10 @@ void ModulePlayer::HandleDebugInput()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+
+		CameraFollow1 = !CameraFollow1;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
@@ -175,16 +179,32 @@ update_status ModulePlayer::Update(float dt)
 	{
 		acceleration = -MAX_ACCELERATION;
 	}
-
+	
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
+	position = vehicle->position;
+
+	if (CameraFollow1 = true) {
+		CameraFollow();
+	}
 
 	vehicle->Render();
-
+	
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
+
+void  ModulePlayer::CameraFollow()
+{
+	CamD = { -12.0f, 6.0f, -10.0f };
+	vec3 forwardVector = vehicle->ForwardVector(); //the vector that looks forward respect the car position
+	vec3 NewCameraPosition = { position.x + (forwardVector.x * CamD.x), position.y + (forwardVector.y + CamD.y), position.z + (forwardVector.z * CamD.z) };
+	vec3 CamPos = App->camera->Position + (NewCameraPosition - App->camera->Position);
+
+	App->camera->Look(CamPos, position);
+}
+

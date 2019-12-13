@@ -38,15 +38,15 @@ void PhysVehicle3D::Render()
 		wheel.Render();
 	}
 
-	Cube chassis(info.chassis_size);
+	Cube chassis({ info.chassis_size.x, info.chassis_size.y, info.chassis_size.z });
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
+
 	position.x = chassis.transform.M[12] += offset.getX();
 	position.y = chassis.transform.M[13] += offset.getY();
 	position.z = chassis.transform.M[14] += offset.getZ();
-	chassis.color = White;
 
 	chassis.Render();
 }
@@ -91,4 +91,12 @@ void PhysVehicle3D::Turn(float degrees)
 float PhysVehicle3D::GetKmh() const
 {
 	return vehicle->getCurrentSpeedKmHour();
+}
+
+vec3 PhysVehicle3D::ForwardVector() const
+{
+	vec3 vec;
+	btVector3 FwVector = vehicle->getForwardVector();
+	vec.Set(FwVector.getX(), FwVector.getY(), FwVector.getZ());
+	return vec;
 }

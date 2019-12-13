@@ -86,17 +86,6 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	body->activate();
 }
 
-//vec3 Physbody3D::GetForward() {
-//	mat4x4 trans;
-//	body.getWorldTransform().getopenglmatrix(&trans);
-//	mat3x3 rot(trans);
-//	vec3 forward(0.f, 0.f, 1.f);
-//	forward = rot * forward;
-//	float scaleInX = vec3(trans[0], trans[4], trans[8]);
-//
-//	return forward;
-//}
-
 void PhysBody3D::SetSpeed(vec3 speed)
 {
 	Stop();
@@ -162,3 +151,5 @@ void PhysBody3D::SetSensor(bool is_sensor) {
 		}
 	}
 }
+
+

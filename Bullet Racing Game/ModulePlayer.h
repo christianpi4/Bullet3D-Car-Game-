@@ -22,7 +22,11 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp();
 
-private:
+	void CameraFollow();
+	bool CameraFollow1 = true;
+	vec3 position;
+	vec3 CamD;
+public:
 	
 	void HandleDebugInput();
 
