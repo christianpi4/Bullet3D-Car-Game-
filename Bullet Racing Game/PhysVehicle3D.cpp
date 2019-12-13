@@ -25,9 +25,9 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Black;
+	wheel.color = Blue;
 
-	for(int i = 0; i < vehicle->getNumWheels(); ++i)
+	for (int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
 		wheel.SetRadius(info.wheels[i].radius);
 		wheel.SetHeight(info.wheels[i].width);
@@ -46,31 +46,9 @@ void PhysVehicle3D::Render()
 	position.x = chassis.transform.M[12] += offset.getX();
 	position.y = chassis.transform.M[13] += offset.getY();
 	position.z = chassis.transform.M[14] += offset.getZ();
-	chassis.color = Black;
+	chassis.color = White;
 
-	Cube cabin(info.cabin_size);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&cabin.transform);
-	btQuaternion qcb = vehicle->getChassisWorldTransform().getRotation();
-	btVector3 cb_offset(info.cabin_offset.x, info.cabin_offset.y, info.cabin_offset.z);
-	cb_offset = cb_offset.rotate(qcb.getAxis(), qcb.getAngle());
-	cabin.transform.M[12] += cb_offset.getX();
-	cabin.transform.M[13] += cb_offset.getY();
-	cabin.transform.M[14] += cb_offset.getZ();
-	cabin.color = Red;
-
-	Cube trunk(info.trunk_size);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&trunk.transform);
-	btQuaternion qtr = vehicle->getChassisWorldTransform().getRotation();
-	btVector3 tr_offset(info.trunk_offset.x, info.trunk_offset.y, info.trunk_offset.z);
-	tr_offset = tr_offset.rotate(qtr.getAxis(), qtr.getAngle());
-	trunk.transform.M[12] += tr_offset.getX();
-	trunk.transform.M[13] += tr_offset.getY();
-	trunk.transform.M[14] += tr_offset.getZ();
-	trunk.color = Blue;
-
-	//chassis.Render();
-	trunk.Render();
-	cabin.Render();
+	chassis.Render();
 }
 
 // ----------------------------------------------------------------------------

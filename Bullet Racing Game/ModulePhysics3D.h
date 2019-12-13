@@ -11,11 +11,14 @@
 
 class DebugDrawer;
 class  PhysBody3D;
+struct PhysVehicle3D;
+struct VehicleInfo;
+
 
 class ModulePhysics3D : public Module
 {
 public:
-	ModulePhysics3D(bool start_enabled = true);
+	ModulePhysics3D(Application* app, bool start_enabled = true);
 	~ModulePhysics3D();
 
 	bool Init();
@@ -37,18 +40,28 @@ public:
 	//TODO 3: Implement the code to add a Hinge constraint ( btHingeConstraint )
 	//void AddConstraintHinge(const Primitive & bodyA, const Primitive & bodyB, ...);
 	void AddConstraintHinge(const Primitive& bodyA, const Primitive& bodyB, const btVector3& pivotA, const btVector3& pivotB, btVector3& axisA, btVector3& axisB);
-
+	PhysVehicle3D* AddVehicle(const VehicleInfo& info);
 	void AddSliderConstraint(const Primitive& bodyA, const Primitive& bodyB, const btTransform& frameA, const btTransform& frameB, bool linearrefereneceA);
+
 private:
+
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;
 	btBroadphaseInterface*				broad_phase;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld*			world;
 	DebugDrawer*						debug_draw;
+	btDefaultVehicleRaycaster*			vehicle_raycaster;
+
+
 	p2List<btPoint2PointConstraint*>	p2_constraint;
 	p2List<btHingeConstraint*>			hinge_constraint;
 	p2List<btSliderConstraint*>			slider_constraint;
+	p2List<btCollisionShape*> shapes;
+	p2List<PhysBody3D*> bodies;
+	p2List<btDefaultMotionState*> motions;
+	p2List<btTypedConstraint*> constraints;
+	p2List<PhysVehicle3D*> vehicles;
 
 };
 

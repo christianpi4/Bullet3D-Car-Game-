@@ -3,26 +3,31 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 
+#define MAX_ACCELERATION 1000.0f
+#define MIN_ACCELERATION 0.f
+#define TURN_DEGREES 15.0f * DEGTORAD
+#define BRAKE_POWER 10.f
+
+struct PhysVehicle3D;
 class Primitive;
 class  PhysBody3D;
 
 class ModulePlayer : public Module
 {
 public:
-	ModulePlayer(bool start_enabled = true);
-	~ModulePlayer();
+	ModulePlayer(Application* app, bool start_enabled = true);
+	virtual ~ModulePlayer();
 
 	bool Start();
 	update_status Update(float dt) override;
-	update_status PostUpdate(float dt) override;
-
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2) override;
-
 	bool CleanUp();
 
 private:
+	
 	void HandleDebugInput();
-	void DebugSpawnPrimitive(Primitive* p);
 
-	p2DynArray<Primitive*> primitives;
+	PhysVehicle3D* vehicle;
+	float turn;
+	float acceleration;
+	float brake;
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+class Application;
 class  PhysBody3D;
 
 class Module
@@ -8,7 +9,9 @@ private :
 	bool enabled;
 
 public:
-	Module(bool start_enabled = true) : enabled(start_enabled)
+	Application* App;
+
+	Module(Application* parent, bool start_enabled = true) : App(parent)
 	{}
 
 	virtual ~Module()
