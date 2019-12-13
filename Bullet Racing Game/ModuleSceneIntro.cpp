@@ -33,36 +33,42 @@ bool ModuleSceneIntro::Start()
 	float Size = StartingSize;
 
 	
-	//Sphere* auxiliar_sphere = nullptr;
+	/*Sphere* auxiliar_sphere = nullptr;
 
-	//for (int n = 0; n < SnakeLength; n++)
-	//{
-	//	Sphere* s = new Sphere(Size, 1000);
-	//	primitives.PushBack(s);
-	//	s->SetPos(XPos, 3.f, 10.f);
+	for (int n = 0; n < SnakeLength; n++)
+	{
+		Sphere* s = new Sphere(Size, 1000);
+		primitives.PushBack(s);
+		s->SetPos(XPos, 3.f, 10.f);
 
-	//	//TODO 2: Link all the spheres with your P2P constraints
-	//	if (primitives.Count() > 1) {
-	//		
-	//		App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
-	//		App->physics->AddConstraintP2P(**primitives.At(n-1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 });
-	//		
-	//	}
+		//TODO 2: Link all the spheres with your P2P constraints
+		if (primitives.Count() > 1) {
+			
+			App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
+			App->physics->AddConstraintP2P(**primitives.At(n-1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 });
+			
+		}
 
-	//	auxiliar_sphere = s;
-	//	XPos += Size + Size + SizeIncrement + BallDistance;
-	//	Size += SizeIncrement;
-	//	
-	//}
+		auxiliar_sphere = s;
+		XPos += Size + Size + SizeIncrement + BallDistance;
+		Size += SizeIncrement;
+		
+	}*/
 
-		CreateLineInX(11,1,11,7, true);
-		CreateDiagonal(21.5,1,11,4, true);
-		//CreateLineInZ(26.5, 1, 17.5, 7);
-		CreateLineInX(27.5, 1, 17.5, 7, false);
-		CreateDiagonal(27.5, 1, 28, 4, false);
+	//Line, DiagonalF, DiagonalB
+	//True = Forward			
+	//False = Backward			
 
+	
+		/*CreateLine(11,1,11,7, true);
+		CreateDiagonalF(21.5,1,11,4, true);
+		CreateLine(27.5, 1, 17.5, 7, false);
+		CreateDiagonalF(27.5, 1, 28, 4, false);*/
 
-
+	CreateLine(10, 1, 0, 3, true);
+	CreateLine(10, 1, 10, 3, false);
+	CreateDiagonal(10, 1, 30, 3, true);
+	CreateDiagonal(10, 1, 50, 3, false);
 
 	return ret;
 }
@@ -156,7 +162,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D * body1, PhysBody3D * body2)
 
 }
 
-void ModuleSceneIntro::CreateLineInX(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool in_x) {
+void ModuleSceneIntro::CreateLine(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward) {
 	
 	
 	vec3 cube_size = { 1,3,1 };
@@ -166,7 +172,7 @@ void ModuleSceneIntro::CreateLineInX(float Initial_pos_x, float Initial_pos_y, f
 
 		if (n % 2 == 0) {
 			
-			Cube* c = new Cube(cube_size, 1000);
+			Cube* c = new Cube(cube_size, 10000);
 			primitives.PushBack(c);
 			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
 
@@ -177,7 +183,7 @@ void ModuleSceneIntro::CreateLineInX(float Initial_pos_x, float Initial_pos_y, f
 
 		else {
 
-			Cube* c = new Cube(cube_size2, 1000);
+			Cube* c = new Cube(cube_size2, 10000);
 			primitives.PushBack(c);
 			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
 
@@ -187,7 +193,7 @@ void ModuleSceneIntro::CreateLineInX(float Initial_pos_x, float Initial_pos_y, f
 
 		}
 
-		if (in_x == true) {
+		if (forward == true) {
 			Initial_pos_x += 1.5f;
 		}
 		else {
@@ -196,42 +202,7 @@ void ModuleSceneIntro::CreateLineInX(float Initial_pos_x, float Initial_pos_y, f
 	}
 }
 
-//void ModuleSceneIntro::CreateLineInZ(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght) {
-//
-//	vec3 cube_size = { 1,3,1 };
-//	vec3 cube_size2 = { 1,2,1 };
-//
-//	for (int n = 0; n < lenght; n++) {
-//
-//		if (n % 2 == 0) {
-//
-//			Cube* c = new Cube(cube_size, 1000);
-//			primitives.PushBack(c);
-//			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-//			Initial_pos_x += 1.5f;
-//
-//			c->color.r = 255;
-//			c->color.g = 0;
-//			c->color.b = 0;
-//		}
-//
-//		else {
-//
-//			Cube* c = new Cube(cube_size2, 1000);
-//			primitives.PushBack(c);
-//			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-//			Initial_pos_x += 1.5f;
-//
-//			c->color.r = 0;
-//			c->color.g = 0;
-//			c->color.b = 255;
-//
-//
-//		}
-//	}
-//}
-
-void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool in_x) {
+void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward) {
 	
 	vec3 cube_size = { 1,3,1 };
 	vec3 cube_size2 = { 1,2,1 };
@@ -241,11 +212,9 @@ void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, 
 
 		if (n % 2 == 0) {
 
-			Cube* c = new Cube(cube_size, 1000);
+			Cube* c = new Cube(cube_size, 10000);
 			primitives.PushBack(c);
 			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-			Initial_pos_x += 1.5f;
-			Initial_pos_z += 1.5f;
 
 			c->color.r = 255;
 			c->color.g = 0;
@@ -254,27 +223,25 @@ void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, 
 
 		else {
 
-			Cube* c = new Cube(cube_size2, 1000);
+			Cube* c = new Cube(cube_size2, 10000);
 			primitives.PushBack(c);
 			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-			Initial_pos_x += 1.5f;
-			Initial_pos_z += 1.5f;
 
 			c->color.r = 0;
 			c->color.g = 0;
 			c->color.b = 255;
 
-
 		}
 
-
-		if (in_x == true) {
+		if (forward == true) {
 			Initial_pos_x += 1.5f;
 			Initial_pos_z += 1.5f;
 		}
 		else {
-			Initial_pos_x -= 1.5f;
-			Initial_pos_z += 1.5f;
+			Initial_pos_x += 1.5f;
+			Initial_pos_z -= 1.5f;
 		}
+		
 	}
 }
+
