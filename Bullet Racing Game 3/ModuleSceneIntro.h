@@ -24,8 +24,8 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 
-	int x = 0, y = 0, z = 0;
-	int sizex = 0, sizey = 0, sizez = 0;
+	float x = 0, y = 0, z = 0;
+	int sizex = 0, sizey = 0, sizez = 0, rot = 0;
 	int cont = 0;
 	
 public:
