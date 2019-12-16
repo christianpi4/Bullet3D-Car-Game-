@@ -46,5 +46,8 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Cube* map[CUBES];
+	Cube* map1[CUBES];
+	Cube* map2[CUBES];
+	Cube* map3[CUBES];
+	Cube* map4[CUBES];
 };

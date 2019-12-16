@@ -7,7 +7,10 @@
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	for (int i = 0; i < CUBES; i++) {
-		map[i] = nullptr;
+		map1[i] = nullptr;
+		map2[i] = nullptr;
+		map3[i] = nullptr;
+		map4[i] = nullptr;
 	}
 }
 
@@ -49,11 +52,33 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 	
 	for (int i = 0; i < CUBES; i++) {
-		if (map[i] != nullptr)
+		if (map1[i] != nullptr)
 		{
-			map[i]->Render();
+			map1[i]->Render();
 		}
 	}
+	
+	for (int i = 0; i < CUBES; i++) {
+		if (map2[i] != nullptr)
+		{
+			map2[i]->Render();
+		}
+	}
+
+	for (int i = 0; i < CUBES; i++) {
+		if (map3[i] != nullptr)
+		{
+			map3[i]->Render();
+		}
+	}
+
+	for (int i = 0; i < CUBES; i++) {
+		if (map4[i] != nullptr)
+		{
+			map4[i]->Render();
+		}
+	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -79,7 +104,7 @@ void ModuleSceneIntro::CreateLine(float Initial_pos_x, float Initial_pos_y, floa
 			c->color.r = 0.7;
 			c->color.g = 0;
 			c->color.b = 0;
-			map[cubeAdd] = c;
+			map1[cubeAdd] = c;
 			cubeAdd++;
 
 		}
@@ -93,7 +118,7 @@ void ModuleSceneIntro::CreateLine(float Initial_pos_x, float Initial_pos_y, floa
 			c->color.r = 0;
 			c->color.g = 0;
 			c->color.b = 1;
-			map[cubeAdd] = c;
+			map2[cubeAdd] = c;
 			cubeAdd++;
 
 		}
@@ -107,11 +132,18 @@ void ModuleSceneIntro::CreateLine(float Initial_pos_x, float Initial_pos_y, floa
 	}
 
 	for (int i = 0; i < CUBES; i++) {
-		if (map[i] != nullptr)
+		if (map1[i] != nullptr)
 		{
-			Cube newcube = *map[i];
+			Cube newcube = *map1[i];
 			App->physics->AddBody(newcube, 10000);
-			map[i]->Render();
+			
+		}
+
+		if (map2[i] != nullptr)
+		{
+			Cube newcube = *map2[i];
+			App->physics->AddBody(newcube, 10000);
+			
 		}
 	}
 }
@@ -133,7 +165,7 @@ void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, 
 			c->color.r = 255;
 			c->color.g = 0;
 			c->color.b = 0;
-			map[cubeAdd] = c;
+			map3[cubeAdd] = c;
 			cubeAdd++;
 
 		}
@@ -147,7 +179,7 @@ void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, 
 			c->color.r = 0;
 			c->color.g = 0;
 			c->color.b = 255;
-			map[cubeAdd] = c;
+			map4[cubeAdd] = c;
 			cubeAdd++;
 
 		}
@@ -164,11 +196,16 @@ void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, 
 	}
 
 	for (int i = 0; i < CUBES; i++) {
-		if (map[i] != nullptr)
+		if (map3[i] != nullptr)
 		{
-			Cube newcube = *map[i];
+			Cube newcube = *map3[i];
 			App->physics->AddBody(newcube, 200000);
-			map[i]->Render();
+		}
+
+		if (map4[i] != nullptr)
+		{
+			Cube newcube = *map4[i];
+			App->physics->AddBody(newcube, 200000);
 		}
 	}
 
