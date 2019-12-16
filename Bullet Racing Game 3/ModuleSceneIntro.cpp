@@ -126,6 +126,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+
 }
 
 pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
