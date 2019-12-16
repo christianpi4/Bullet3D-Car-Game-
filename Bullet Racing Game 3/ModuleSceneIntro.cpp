@@ -4,18 +4,68 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	for (int i = 0; i < CUBES; i++) {
-		map1[i] = nullptr;
-		map2[i] = nullptr;
-		map3[i] = nullptr;
-		map4[i] = nullptr;
+		map_list[i] = nullptr;
 	}
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
 {}
+
+bool ModuleSceneIntro::Awake() {
+
+	bool ret = true;
+
+	node = LoadCircuit(map_file);
+	
+	pugi::xml_node cube;
+
+	for (cube = node.child("cube_size"); cube && ret; cube = cube.next_sibling("cube_size")) {
+
+		sizex = cube.attribute("x").as_int();
+		sizey = cube.attribute("y").as_int();
+		sizez = cube.attribute("z").as_int();
+		LOG("%i %i %i", sizex, sizey, sizez);
+	}
+
+	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
+		
+		Cube* box = new Cube(sizex, sizey, sizez);
+
+		x = cube.attribute("x").as_int();
+		y = cube.attribute("y").as_int();
+		z = cube.attribute("z").as_int();
+
+		LOG("%i %i %i", x, y, z);
+		
+		if (cont % 2 == 0) {
+
+			box->color.r = 0.7;
+			box->color.g = 0;
+			box->color.b = 0;
+
+		}
+		
+		else {
+
+			box->color.r = 0;
+			box->color.g = 0;
+			box->color.b = 1;
+
+		}
+
+		box->SetPos(x, y + box->size.y*0.5, z);
+		map_list[cubesAdd] = box;
+
+		cubesAdd++;
+		cont++;
+	}
+
+	return ret;
+}
 
 // Load assets
 bool ModuleSceneIntro::Start()
@@ -26,12 +76,13 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	CreateLine(10, 1, 0, 3, true);
-	CreateLine(10, 1, 10, 3, false);
-	CreateDiagonal(10, 1, 30, 3, true);
-	CreateDiagonal(10, 1, 50, 3, false);
-	
-	
+	for (int i = 0; i < CUBES; i++) {
+		if (map_list[i] != nullptr)
+		{
+			Cube aux_cube = *map_list[i];
+			App->physics->AddBody(aux_cube, 10000);
+		}
+	}
 
 	return ret;
 }
@@ -40,6 +91,15 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	for (int i = 0; i < CUBES; i++) {
+		
+		if (map_list[i] != nullptr) {
+			
+			delete map_list[i];
+
+		}
+
+	}
 
 	return true;
 }
@@ -52,33 +112,14 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 	
 	for (int i = 0; i < CUBES; i++) {
-		if (map1[i] != nullptr)
+		
+		if (map_list[i] != nullptr)
 		{
-			map1[i]->Render();
-		}
-	}
-	
-	for (int i = 0; i < CUBES; i++) {
-		if (map2[i] != nullptr)
-		{
-			map2[i]->Render();
-		}
-	}
+			
+			map_list[i]->Render();
 
-	for (int i = 0; i < CUBES; i++) {
-		if (map3[i] != nullptr)
-		{
-			map3[i]->Render();
 		}
 	}
-
-	for (int i = 0; i < CUBES; i++) {
-		if (map4[i] != nullptr)
-		{
-			map4[i]->Render();
-		}
-	}
-
 
 	return UPDATE_CONTINUE;
 }
@@ -87,128 +128,26 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
 
-void ModuleSceneIntro::CreateLine(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward) {
+pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
+{
+	
+	pugi::xml_node ret;
 
+	pugi::xml_parse_result result = map_file.load_file("Map_Cube_Coords.xml");
 
-	vec3 cube_size = { 1,3,1 };
-	vec3 cube_size2 = { 1,2,1 };
-	int cubeAdd = 0;
-	for (int n = 0; n < lenght; n++) {
-
-		if (n % 2 == 0) {
-
-			//Cube* c = new Cube(cube_size, 10000);
-			Cube* c = new Cube(1, 3, 1);
-			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
+	if (result == NULL) { 
 		
-			c->color.r = 0.7;
-			c->color.g = 0;
-			c->color.b = 0;
-			map1[cubeAdd] = c;
-			cubeAdd++;
-
-		}
-
-		else {
-
-			//Cube* c = new Cube(cube_size2, 10000);
-			Cube* c = new Cube(1, 2, 1);
-			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-
-			c->color.r = 0;
-			c->color.g = 0;
-			c->color.b = 1;
-			map2[cubeAdd] = c;
-			cubeAdd++;
-
-		}
-
-		if (forward == true) {
-			Initial_pos_x += 1.5f;
-		}
-		else {
-			Initial_pos_z += 1.5f;
-		}
-	}
-
-	for (int i = 0; i < CUBES; i++) {
-		if (map1[i] != nullptr)
-		{
-			Cube newcube = *map1[i];
-			App->physics->AddBody(newcube, 10000);
-			
-		}
-
-		if (map2[i] != nullptr)
-		{
-			Cube newcube = *map2[i];
-			App->physics->AddBody(newcube, 10000);
-			
-		}
-	}
-}
-
-void ModuleSceneIntro::CreateDiagonal(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward) {
-
-	vec3 cube_size = { 1,3,1 };
-	vec3 cube_size2 = { 1,2,1 };
-	int cubeAdd = 0;
-
-	for (int n = 0; n < lenght; n++) {
-
-		if (n % 2 == 0) {
-
-			//Cube* c = new Cube(cube_size, 10000);
-			Cube* c = new Cube(1, 3, 1);
-			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-
-			c->color.r = 255;
-			c->color.g = 0;
-			c->color.b = 0;
-			map3[cubeAdd] = c;
-			cubeAdd++;
-
-		}
-
-		else {
-
-			//Cube* c = new Cube(cube_size2, 10000);
-			Cube* c = new Cube(1, 2, 1);
-			c->SetPos(Initial_pos_x, Initial_pos_y, Initial_pos_z);
-
-			c->color.r = 0;
-			c->color.g = 0;
-			c->color.b = 255;
-			map4[cubeAdd] = c;
-			cubeAdd++;
-
-		}
-
-		if (forward == true) {
-			Initial_pos_x += 1.5f;
-			Initial_pos_z += 1.5f;
-		}
-		else {
-			Initial_pos_x += 1.5f;
-			Initial_pos_z -= 1.5f;
-		}
+		LOG("Could not load map xml file map.xml. pugi error: %s", result.description()); 
 
 	}
 
-	for (int i = 0; i < CUBES; i++) {
-		if (map3[i] != nullptr)
-		{
-			Cube newcube = *map3[i];
-			App->physics->AddBody(newcube, 200000);
-		}
+	else {
 
-		if (map4[i] != nullptr)
-		{
-			Cube newcube = *map4[i];
-			App->physics->AddBody(newcube, 200000);
-		}
+		ret = map_file.child("map");
+
 	}
 
+	return ret;
 
 }
 

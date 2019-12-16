@@ -54,6 +54,8 @@ bool Application::Init()
 		item = item->next;
 	}
 
+	ret = scene_intro->Awake();
+
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
 	item = list_modules.getFirst();

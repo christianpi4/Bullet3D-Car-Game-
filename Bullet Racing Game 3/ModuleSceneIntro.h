@@ -3,6 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "PugiXml\src\pugixml.hpp"
 
 #define MAX_SNAKE 2
 #define CUBES 500
@@ -15,25 +16,20 @@ class ModuleSceneIntro : public Module
 public:
 	ModuleSceneIntro(Application* app, bool start_enabled = true);
 	~ModuleSceneIntro();
-
+	
+	bool Awake();
 	bool Start();
 	update_status Update(float dt);
+	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-
-	void CreateLine(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward);
-	void CreateDiagonal(float Initial_pos_x, float Initial_pos_y, float Initial_pos_z, int lenght, bool forward);
-
+	int x = 0, y = 0, z = 0;
+	int sizex = 0, sizey = 0, sizez = 0;
+	int cont = 0;
+	
 public:
-	/*
-	PhysBody3D* pb_snake[MAX_SNAKE];
-	Sphere s_snake[MAX_SNAKE];
-
-	PhysBody3D* pb_snake2[MAX_SNAKE];
-	Sphere s_snake2[MAX_SNAKE];
-	*/
-
+	
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
@@ -46,8 +42,12 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Cube* map1[CUBES];
-	Cube* map2[CUBES];
-	Cube* map3[CUBES];
-	Cube* map4[CUBES];
+	Cube* map_list[CUBES];
+
+	pugi::xml_document map_file;
+	pugi::xml_node node;
+	int cubesAdd = 0;
+
+
+
 };
