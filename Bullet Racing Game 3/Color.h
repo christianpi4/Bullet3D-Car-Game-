@@ -30,3 +30,6 @@ extern Color Green;
 extern Color Blue;
 extern Color Black;
 extern Color White;
+extern Color Violet;
+extern Color Grey;
+extern Color Gold;

@@ -35,9 +35,10 @@ bool ModuleSceneIntro::Awake() {
 		
 		Cube* box = new Cube(sizex, sizey, sizez);
 
-		x = cube.attribute("x").as_int();
-		y = cube.attribute("y").as_int();
-		z = cube.attribute("z").as_int();
+		x = cube.attribute("x").as_float();
+		y = cube.attribute("y").as_float();
+		z = cube.attribute("z").as_float();
+		rot = cube.attribute("rotation").as_int();
 
 		LOG("%i %i %i", x, y, z);
 		
@@ -53,11 +54,12 @@ bool ModuleSceneIntro::Awake() {
 
 			box->color.r = 0;
 			box->color.g = 0;
-			box->color.b = 1;
+			box->color.b = 0.7;
 
 		}
 
 		box->SetPos(x, y + box->size.y*0.5, z);
+		box->SetRotation(rot, { 0,1,0 });
 		map_list[cubesAdd] = box;
 
 		cubesAdd++;
