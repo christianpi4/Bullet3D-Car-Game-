@@ -7,6 +7,8 @@
 
 #define MAX_SNAKE 2
 #define CUBES 500
+#define RAMPS 10
+
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -43,10 +45,13 @@ public:
 	PhysMotor3D* right_wheel;
 
 	Cube* map_list[CUBES];
+	Cube* ramp_list[CUBES];
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;
 	int cubesAdd = 0;
+	int rampsAdd = 0;
+
 
 
 

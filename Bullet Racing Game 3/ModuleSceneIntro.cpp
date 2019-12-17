@@ -65,6 +65,43 @@ bool ModuleSceneIntro::Awake() {
 		cubesAdd++;
 		cont++;
 	}
+	
+	/*for (int i = 0; i < RAMPS; i++)
+	{*/
+		Cube* ramp = new Cube(20, 1, 10);
+		ramp->color.r = 0;
+		ramp->color.g = 0;
+		ramp->color.b = 0;
+		ramp->SetPos(100 + ramp->size.x*0.5, ramp->size.y*0.5, 100 + ramp->size.z*0.5);
+		ramp->SetRotation(45, { 1,0,0 });
+
+		
+	//}
+	
+		ramp_list[rampsAdd] = ramp;
+		rampsAdd++;
+
+		/*Sphere* auxiliar_sphere = nullptr;
+
+	for (int n = 0; n < SnakeLength; n++)
+	{
+		
+
+		if (primitives.Count() > 1) {
+
+			App->physics->AddConstraintHinge(**primitives.At(n - 1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 }, btVector3{ 0,0,1 }, btVector3{ 0,0,1 });
+			App->physics->AddConstraintP2P(**primitives.At(n-1), **primitives.At(n), btVector3{ (-s->GetRadius()),0,0 }, btVector3{ (auxiliar_sphere->GetRadius()),0,0 });
+
+		}
+
+		auxiliar_sphere = s;
+		XPos += Size + Size + SizeIncrement + BallDistance;
+		Size += SizeIncrement;
+
+	}*/
+	
+
+	
 
 	return ret;
 }
@@ -86,6 +123,15 @@ bool ModuleSceneIntro::Start()
 		}
 	}
 
+	
+		if (ramp_list[0] != nullptr)
+		{
+			Cube aux_ramp = *ramp_list[0];
+			App->physics->AddBody(aux_ramp, 10000);
+		}
+	
+
+
 	return ret;
 }
 
@@ -102,7 +148,15 @@ bool ModuleSceneIntro::CleanUp()
 		}
 
 	}
+	/*for (int i = 0; i < RAMPS; i++) {
 
+		if (ramp_list[i] != nullptr) {
+
+			delete ramp_list[i];
+
+		}
+
+	}*/
 	return true;
 }
 
