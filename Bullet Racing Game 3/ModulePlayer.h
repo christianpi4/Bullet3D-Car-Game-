@@ -26,7 +26,7 @@ public:
 	vec3 CamD;
 	vec3 CarPos;
 
-	bool camera;
+	bool camera = true;
 
 	PhysVehicle3D* vehicle;
 	float turn;

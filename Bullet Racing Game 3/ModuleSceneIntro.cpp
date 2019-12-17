@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Awake() {
 
 	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
 		
-		Cube* box = new Cube(sizex, sizey, sizez);
+		Cube* box = new Cube(sizex, sizey+2, sizez);
 
 		x = cube.attribute("x").as_float();
 		y = cube.attribute("y").as_float();
@@ -122,7 +122,7 @@ bool ModuleSceneIntro::Start()
 		if (map_list[i] != nullptr)
 		{
 			Cube aux_cube = *map_list[i];
-			App->physics->AddBody(aux_cube, 10000);
+			App->physics->AddBody(aux_cube, 1000000);
 		}
 	}
 

@@ -21,8 +21,45 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 0.75, 3);
+	car.chassis_size.Set(2, 0.45, 3);
 	car.chassis_offset.Set(0, 1, 0);
+
+	car.lateral_right_size.Set(0.1, 0.8, 3);
+	car.lateral_right_offset.Set(0.95, 1.3, 0);
+
+	car.lateral_left_size.Set(0.1, 0.8, 3);
+	car.lateral_left_offset.Set(-0.95, 1.3, 0);
+
+	car.front_size.Set(2, 0.4, 0.1);
+	car.front_offset.Set(0, 1.3, 1.45);
+
+	car.back_size.Set(2, 0.4, 0.1);
+	car.back_offset.Set(0, 1.3, -1.45);
+
+	car.seat_size.Set(1, 0.1, 1);
+	car.seat_offset.Set(0, 1.3, -0.95);
+
+	car.seatback_size.Set(1, 0.8, 0.15);
+	car.seatback_offset.Set(0, 1.8, -1.4);
+
+	car.handlebar_size.Set(0.2, 1.3, 0.2);
+	car.handlebar_offset.Set(0, 1.5, 0.9);
+
+	car.handles_left_size.Set(0.4, 0.1, 0.1);
+	car.handles_left_offset.Set(0.3, 2, 0.9);
+
+	car.handles_right_size.Set(0.4, 0.1, 0.1);
+	car.handles_right_offset.Set(-0.3, 2, 0.9);
+
+	car.aileron_left_size.Set(0.3, 1.3, 0.4);
+	car.aileron_left_offset.Set(-0.7, 1.45, -1.6);
+
+	car.aileron_right_size.Set(0.3, 1.3, 0.4);
+	car.aileron_right_offset.Set(0.7, 1.45, -1.6);
+
+	car.aileron_size.Set(1.7, 0.1, 0.4);
+	car.aileron_offset.Set(0, 1.9, -1.9);
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -85,7 +122,7 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 1, -10);
+	vehicle->SetPos(0, 0, -10);
 
 	return true;
 }
@@ -150,7 +187,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-//	CameraFollow();
+	//CameraFollow();
 
 	vehicle->Render();
 
@@ -165,8 +202,9 @@ update_status ModulePlayer::Update(float dt)
 
 void  ModulePlayer::CameraFollow()
 {
-	CamD = { -12.0f, 6.0f, -10.0f };
-	vec3 forwardVector = vehicle->ForwardVector(); //the vector that looks forward respect the car position
+
+	CamD = { -9.0f, 5.0f, -9.0f };
+	vec3 forwardVector = vehicle->ForwardVector();
 	vec3 NewCameraPosition = { CarPos.x + (forwardVector.x * CamD.x), CarPos.y + (forwardVector.y + CamD.y), CarPos.z + (forwardVector.z * CamD.z) };
 	vec3 CamPos = App->camera->Position + (NewCameraPosition - App->camera->Position);
 
