@@ -33,3 +33,4 @@ extern Color White;
 extern Color Violet;
 extern Color Grey;
 extern Color Gold;
+extern Color Cyan;
