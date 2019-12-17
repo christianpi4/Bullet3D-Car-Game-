@@ -33,14 +33,19 @@ bool ModuleSceneIntro::Awake() {
 
 	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
 		
+<<<<<<< HEAD
 		Cube* box = new Cube(sizex, sizey+1, sizez);
 
+=======
+		Cube* box = new Cube(sizex, sizey+2, sizez);
+		
+>>>>>>> c4ac58989b0a4238ae5d276740a8755afab50db7
 		x = cube.attribute("x").as_float();
 		y = cube.attribute("y").as_float();
 		z = cube.attribute("z").as_float();
 		rot = cube.attribute("rotation").as_int();
 
-		LOG("%i %i %i", x, y, z);
+		LOG("%f %f %f %i", x, y, z, rot);
 		
 		if (cont % 2 == 0) {
 
@@ -60,31 +65,15 @@ bool ModuleSceneIntro::Awake() {
 
 		box->SetPos(x, y + box->size.y*0.5, z);
 		box->SetRotation(rot, { 0,1,0 });
+	
 		map_list[cubesAdd] = box;
 
 		cubesAdd++;
 		cont++;
 	}
 	
-	/*for (int i = 0; i < RAMPS; i++)
-	{*/
-		Cube* ramp = new Cube(20, 1, 10);
-		ramp->color.r = 0;
-		ramp->color.g = 0;
-		ramp->color.b = 0;
-		ramp->SetPos(100 + ramp->size.x*0.5, ramp->size.y*0.5, 100 + ramp->size.z*0.5);
-		ramp->SetRotation(45, { 1,0,0 });
 
-		
-	//}
-	
-		ramp_list[rampsAdd] = ramp;
-		rampsAdd++;
-
-		Cube* auxiliar_ramp = nullptr;
-		
-
-		/*Sphere* auxiliar_sphere = nullptr;
+	/*Sphere* auxiliar_sphere = nullptr;
 
 	for (int n = 0; n < SnakeLength; n++)
 	{
@@ -103,9 +92,6 @@ bool ModuleSceneIntro::Awake() {
 
 	}*/
 	
-
-	
-
 	return ret;
 }
 
@@ -123,18 +109,23 @@ bool ModuleSceneIntro::Start()
 		{
 			Cube aux_cube = *map_list[i];
 			App->physics->AddBody(aux_cube, 1000000);
+
 		}
 	}
 
-	
-		if (ramp_list[0] != nullptr)
-		{
-			Cube aux_ramp = *ramp_list[0];
-			App->physics->AddBody(aux_ramp, 10000);
-			//App->physics->AddConstraintP2P(ramp, aux_ramp, btVector3{ -ramp->size.x,0,0 }, btVector3{ aux_ramp->size.x, 0, 0 });
-		}
-	
+	ramp = new Cube(14, 0.1, 10);
+	ramp->color = Gold;
+	ramp->SetPos(0, 1.25, 0);
+	ramp->SetRotation(-15, { 1,0,0 });
+	Cube aux_ramp = *ramp;
+	App->physics->AddBody(aux_ramp, 0);
 
+	ramp2 = new Cube(5, 0.1, 2.5);
+	ramp2->color = Gold;
+	ramp2->SetPos(10, 0, 0);
+	ramp2->SetRotation(45, { 0,0,1 });
+	Cube aux_ramp2 = *ramp2;
+	App->physics->AddBody(aux_ramp2, 0);
 
 	return ret;
 }
@@ -152,24 +143,47 @@ bool ModuleSceneIntro::CleanUp()
 		}
 
 	}
-	/*for (int i = 0; i < RAMPS; i++) {
 
-		if (ramp_list[i] != nullptr) {
+	delete ramp;
+	delete ramp2;
 
-			delete ramp_list[i];
-
-		}
-
-	}*/
 	return true;
 }
 
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+
+	Cube plane(600, 2, 600);
+	plane.SetPos(0, -1, 0);
+	plane.color = Cyan;
+	plane.Render();
+
+	Cube plane2(600, 2, 600);
+	plane2.SetPos(0, 100, 0);
+	plane2.color = Cyan;
+	plane2.Render();
+
+	Cube plane3(2, 100, 600);
+	plane3.SetPos(-300, 50, 0);
+	plane3.color = Cyan;
+	plane3.Render();
+	
+	Cube plane4(2, 100, 600);
+	plane4.SetPos(300, 50, 0);
+	plane4.color = Cyan;
+	plane4.Render();
+
+	Cube plane5(600, 100, 2);
+	plane5.SetPos(0, 50, -300);
+	plane5.color = Cyan;
+	plane5.Render();
+
+	Cube plane6(600, 100, 2);
+	plane6.SetPos(0, 50, 300);
+	plane6.color = Cyan;
+	plane6.Render();
+
 	
 	for (int i = 0; i < CUBES; i++) {
 		
@@ -180,6 +194,9 @@ update_status ModuleSceneIntro::Update(float dt)
 
 		}
 	}
+
+	ramp->Render();
+	ramp2->Render();
 
 	return UPDATE_CONTINUE;
 }

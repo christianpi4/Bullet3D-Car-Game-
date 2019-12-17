@@ -2,8 +2,11 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "Primitive.h"
+#include "p2DynArray.h"
 
 struct PhysVehicle3D;
+struct PhysBody3D;
 
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
@@ -27,6 +30,8 @@ public:
 	vec3 CarPos;
 
 	bool camera = true;
+
+	
 
 	PhysVehicle3D* vehicle;
 	float turn;

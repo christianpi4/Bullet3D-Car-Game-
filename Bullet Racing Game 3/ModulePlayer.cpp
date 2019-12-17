@@ -182,12 +182,28 @@ update_status ModulePlayer::Update(float dt)
 
 	}*/
 
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		Sphere s;
+		s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+		float force = 30.0f;
+
+		vec3 forwardVector = vehicle->ForwardVector();
+		vec3 NewCameraPosition = { CarPos.x + forwardVector.x, CarPos.y + forwardVector.y, CarPos.z + forwardVector.z };
+		vec3 CamPos = App->camera->Position + (NewCameraPosition - App->camera->Position);
+
+		App->physics->AddBody(s,10.0f)->Push(-(CamPos.x * force), -(CamPos.y * force), -(CamPos.z * force));
+		s.Render();
+		
+	}
+
+
 	CarPos = vehicle->GetPos();
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	//CameraFollow();
+	CameraFollow();
 
 	vehicle->Render();
 

@@ -45,14 +45,12 @@ public:
 	PhysMotor3D* right_wheel;
 
 	Cube* map_list[CUBES];
-	Cube* ramp_list[CUBES];
+	Cube* ramp;
+	Cube* ramp2;
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;
 	int cubesAdd = 0;
 	int rampsAdd = 0;
-
-
-
 
 };
