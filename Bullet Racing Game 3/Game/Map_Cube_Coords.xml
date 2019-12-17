@@ -36,7 +36,6 @@
   <box x="7" y="0" z="38" rotation="0"/>
   <box x="7" y="0" z="42" rotation="0"/>
   <box x="7" y="0" z="46" rotation="0"/>
-
   
 <!-- FIRST CURVE -->
 
@@ -236,7 +235,6 @@
 
 <!-- FIFTH STRAIGHT -->
 
-
   <box x="-56.5" y="0" z="-28.5" rotation="-225"/>
   <box x="-53.5" y="0" z="-31.5" rotation="-225"/>
   <box x="-50.5" y="0" z="-34.5" rotation="-225"/>
@@ -254,6 +252,20 @@
   <box x="-14.5" y="0" z="-70.5" rotation="-225"/>
   <box x="-11.5" y="0" z="-73.5" rotation="-225"/>
   <box x="-8.5" y="0" z="-76.5" rotation="-225"/>
+  <box x="-5.5" y="0" z="-79.5" rotation="-225"/>
+  <box x="-2.5" y="0" z="-82.5" rotation="-225"/>
+  <box x="0.5" y="0" z="-85.5" rotation="-225"/>
+  <box x="3.5" y="0" z="-88.5" rotation="-225"/>
+  <box x="6.5" y="0" z="-91.5" rotation="-225"/>
+  <box x="9.5" y="0" z="-94.5" rotation="-225"/>
+  <box x="12.5" y="0" z="-97.5" rotation="-225"/>
+  <box x="15.5" y="0" z="-100.5" rotation="-225"/>
+  <box x="18.5" y="0" z="-103.5" rotation="-225"/>
+  <box x="21.5" y="0" z="-106.5" rotation="-225"/>
+  <box x="24.5" y="0" z="-109.5" rotation="-225"/>
+  <box x="27.5" y="0" z="-112.5" rotation="-225"/>
+  <box x="30.5" y="0" z="-115.5" rotation="-225"/>
+  <box x="33.5" y="0" z="-118.5" rotation="-225"/>
 
   <box x="-40" y="0" z="-18.5" rotation="-225"/>
   <box x="-37" y="0" z="-21.5" rotation="-225"/>
@@ -274,5 +286,48 @@
   <box x="8" y="0" z="-66.5" rotation="-225"/>
   <box x="11" y="0" z="-69.5" rotation="-225"/>
   <box x="14" y="0" z="-72.5" rotation="-225"/>
+  <box x="17" y="0" z="-75.5" rotation="-225"/>
+  <box x="20" y="0" z="-78.5" rotation="-225"/>
+  <box x="23" y="0" z="-81.5" rotation="-225"/>
+  <box x="26" y="0" z="-84.5" rotation="-225"/>
+  <box x="29" y="0" z="-87.5" rotation="-225"/>
+  <box x="32" y="0" z="-90.5" rotation="-225"/>
+  <box x="35" y="0" z="-93.5" rotation="-225"/>
+  <box x="38" y="0" z="-96.5" rotation="-225"/>
+  <box x="41" y="0" z="-99.5" rotation="-225"/>
+
+<!-- FIFTH CURVE -->
+
+  <box x="44.5" y="0" z="-102" rotation="120"/>
+  <box x="48.5" y="0" z="-103.5" rotation="105"/>
+  <box x="53" y="0" z="-104" rotation="90"/>
+  <box x="57.5" y="0" z="-103.5" rotation="75"/>
+  <box x="61.5" y="0" z="-102" rotation="60"/>
+  <box x="64.5" y="0" z="-99.5" rotation="45"/>
+  <box x="67" y="0" z="-96" rotation="30"/>
+  <box x="68.5" y="0" z="-92" rotation="15"/>
+  <box x="69" y="0" z="-87.5" rotation="0"/>
+  <box x="68.5" y="0" z="-83.5" rotation="-15"/>
+  <box x="67" y="0" z="-79.5" rotation="-30"/>
+  <box x="64.5" y="0" z="-76" rotation="-45"/>
+
+  <box x="37" y="0" z="-121.5" rotation="125"/>
+  <box x="41" y="0" z="-123.5" rotation="115"/>
+  <box x="45.5" y="0" z="-125" rotation="105"/>
+  <box x="50" y="0" z="-125.5" rotation="95"/>
+  <box x="54.5" y="0" z="-125.5" rotation="85"/>
+  <box x="59" y="0" z="-124.5" rotation="75"/>
+  <box x="63.5" y="0" z="-123" rotation="65"/>
+  <box x="67.5" y="0" z="-120.5" rotation="55"/>
+  <box x="71" y="0" z="-117.5" rotation="45"/>
+  <box x="74" y="0" z="-114" rotation="35"/>
+  <box x="76.5" y="0" z="-110" rotation="25"/>
+  <box x="78.5" y="0" z="-105.5" rotation="15"/>
+  <box x="627" y="0" z="-79.5" rotation="5"/>
+  <box x="644.5" y="0" z="-76" rotation="-5"/>
+  <box x="627" y="0" z="-79.5" rotation="-15"/>
+  <box x="644.5" y="0" z="-76" rotation="-25"/>
+  <box x="627" y="0" z="-79.5" rotation="-35"/>
+  <box x="644.5" y="0" z="-76" rotation="-45"/>
 
 </map>

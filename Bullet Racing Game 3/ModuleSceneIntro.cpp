@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Awake() {
 
 	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
 		
-		Cube* box = new Cube(sizex, sizey+2, sizez);
+		Cube* box = new Cube(sizex, sizey+1, sizez);
 
 		x = cube.attribute("x").as_float();
 		y = cube.attribute("y").as_float();
