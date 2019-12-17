@@ -32,14 +32,8 @@ bool ModuleSceneIntro::Awake() {
 	}
 
 	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
-		
-<<<<<<< HEAD
 		Cube* box = new Cube(sizex, sizey+1, sizez);
 
-=======
-		Cube* box = new Cube(sizex, sizey+2, sizez);
-		
->>>>>>> c4ac58989b0a4238ae5d276740a8755afab50db7
 		x = cube.attribute("x").as_float();
 		y = cube.attribute("y").as_float();
 		z = cube.attribute("z").as_float();
@@ -71,6 +65,7 @@ bool ModuleSceneIntro::Awake() {
 		cubesAdd++;
 		cont++;
 	}
+
 	
 
 	/*Sphere* auxiliar_sphere = nullptr;
@@ -100,6 +95,8 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+
+
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -153,8 +150,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-
-	Cube plane(600, 2, 600);
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
+	/*Cube plane(600, 2, 600);
 	plane.SetPos(0, -1, 0);
 	plane.color = Cyan;
 	plane.Render();
@@ -162,7 +161,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Cube plane2(600, 2, 600);
 	plane2.SetPos(0, 100, 0);
 	plane2.color = Cyan;
-	plane2.Render();
+	plane2.Render();*/
 
 	Cube plane3(2, 100, 600);
 	plane3.SetPos(-300, 50, 0);
@@ -197,6 +196,9 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	ramp->Render();
 	ramp2->Render();
+
+	App->audio->PlayMusic("Game/Audio/barça_anthem.ogg");
+
 
 	return UPDATE_CONTINUE;
 }

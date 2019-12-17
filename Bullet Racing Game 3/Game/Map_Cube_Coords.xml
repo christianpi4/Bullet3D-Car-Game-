@@ -317,20 +317,25 @@
   <box x="50" y="0" z="-125.5" rotation="95"/>
   <box x="54.5" y="0" z="-125.5" rotation="85"/>
   <box x="59" y="0" z="-124.5" rotation="75"/>
-  <box x="63.5" y="0" z="-123" rotation="65"/>
-  <box x="67.5" y="0" z="-120.5" rotation="55"/>
-  <box x="71" y="0" z="-117.5" rotation="45"/>
-  <box x="74" y="0" z="-114" rotation="35"/>
-  <box x="76.5" y="0" z="-110" rotation="25"/>
-  <box x="78.5" y="0" z="-105.5" rotation="15"/>
-  <box x="627" y="0" z="-79.5" rotation="5"/>
-  <box x="644.5" y="0" z="-76" rotation="-5"/>
-  <box x="627" y="0" z="-79.5" rotation="-15"/>
-  <box x="644.5" y="0" z="-76" rotation="-25"/>
-  <box x="627" y="0" z="-79.5" rotation="-35"/>
-  <box x="644.5" y="0" z="-76" rotation="-45"/>
-=======
-  
->>>>>>> c4ac58989b0a4238ae5d276740a8755afab50db7
+  <box x="63.5" y="0" z="-123" rotation="70"/>
+  <box x="67.5" y="0" z="-121.5" rotation="65"/>
+  <box x="71" y="0" z="-119.5" rotation="55"/>
+  <box x="74.5" y="0" z="-116.5" rotation="45"/>
+  <box x="77.5" y="0" z="-113" rotation="40"/>
+  <box x="80" y="0" z="-109.5" rotation="35"/>
+  <box x="82" y="0" z="-106" rotation="30"/>
+  <box x="84" y="0" z="-102" rotation="20"/>
+  <box x="85" y="0" z="-98" rotation="15"/>
+  <box x="86" y="0" z="-93.5" rotation="10"/>
+  <box x="86.5" y="0" z="-89.5" rotation="5"/>
+  <box x="86.5" y="0" z="-85.5" rotation="0"/>
+  <box x="86" y="0" z="-81.5" rotation="-5"/>
+  <box x="85.5" y="0" z="-77.5" rotation="-15"/>
+  <box x="84" y="0" z="-73.5" rotation="-20"/>
+  <box x="82.5" y="0" z="-69.5" rotation="-25"/>
+  <box x="80.5" y="0" z="-65.5" rotation="-30"/>
+  <box x="78" y="0" z="-61.5" rotation="-35"/>
+  <box x="75" y="0" z="-58" rotation="-45"/>
+
 
 </map>

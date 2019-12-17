@@ -140,7 +140,7 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
-	/*if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
 
@@ -180,7 +180,7 @@ update_status ModulePlayer::Update(float dt)
 		if (vehicle->GetKmh() > 0.0f)
 			brake = BRAKE_POWER/6;
 
-	}*/
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
@@ -203,7 +203,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	CameraFollow();
+	//CameraFollow();
 
 	vehicle->Render();
 

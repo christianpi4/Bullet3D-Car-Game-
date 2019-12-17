@@ -26,9 +26,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 
-	float x = 0, y = 0, z = 0;
-	int sizex = 0, sizey = 0, sizez = 0, rot = 0;
-	int cont = 0;
+	
 	
 public:
 	
@@ -50,7 +48,13 @@ public:
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;
+
+	float x = 0, y = 0, z = 0;
+	int sizex = 0, sizey = 0, sizez = 0, rot = 0;
+	int cont = 0;
 	int cubesAdd = 0;
 	int rampsAdd = 0;
+
+	int barça_anthem;
 
 };
