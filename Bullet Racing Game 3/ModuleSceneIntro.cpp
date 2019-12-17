@@ -81,6 +81,9 @@ bool ModuleSceneIntro::Awake() {
 		ramp_list[rampsAdd] = ramp;
 		rampsAdd++;
 
+		Cube* auxiliar_ramp = nullptr;
+		
+
 		/*Sphere* auxiliar_sphere = nullptr;
 
 	for (int n = 0; n < SnakeLength; n++)
@@ -128,6 +131,7 @@ bool ModuleSceneIntro::Start()
 		{
 			Cube aux_ramp = *ramp_list[0];
 			App->physics->AddBody(aux_ramp, 10000);
+			//App->physics->AddConstraintP2P(ramp, aux_ramp, btVector3{ -ramp->size.x,0,0 }, btVector3{ aux_ramp->size.x, 0, 0 });
 		}
 	
 
