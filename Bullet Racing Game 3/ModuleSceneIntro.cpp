@@ -152,38 +152,39 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
-	p.Render();
-	Cube plane(600, 2, 600);
-	plane.SetPos(0, -1, 0);
-	plane.color = Cyan;
-	plane.Render();
+	p.Render();*/
 
-	Cube plane2(600, 2, 600);
-	plane2.SetPos(0, 100, 0);
-	plane2.color = Cyan;
-	plane2.Render();
+	Cube floor(600, 2, 600);
+	floor.SetPos(0, -1, 0);
+	floor.color = Cyan;
+	floor.Render();
 
-	Cube plane3(2, 100, 600);
-	plane3.SetPos(-300, 50, 0);
-	plane3.color = Cyan;
-	plane3.Render();
+	Cube roof(600, 2, 600);
+	roof.SetPos(0, 100, 0);
+	roof.color = Cyan;
+	roof.Render();
+
+	Cube wall_left(2, 100, 600);
+	wall_left.SetPos(-300, 50, 0);
+	wall_left.color = Cyan;
+	wall_left.Render();
 	
-	Cube plane4(2, 100, 600);
-	plane4.SetPos(300, 50, 0);
-	plane4.color = Cyan;
-	plane4.Render();
+	Cube wall_right(2, 100, 600);
+	wall_right.SetPos(300, 50, 0);
+	wall_right.color = Cyan;
+	wall_right.Render();
 
-	Cube plane5(600, 100, 2);
-	plane5.SetPos(0, 50, -300);
-	plane5.color = Cyan;
-	plane5.Render();
+	Cube wall_front(600, 100, 2);
+	wall_front.SetPos(0, 50, -300);
+	wall_front.color = Cyan;
+	wall_front.Render();
 
-	Cube plane6(600, 100, 2);
-	plane6.SetPos(0, 50, 300);
-	plane6.color = Cyan;
-	plane6.Render();
+	Cube wall_back(600, 100, 2);
+	wall_back.SetPos(0, 50, 300);
+	wall_back.color = Cyan;
+	wall_back.Render();
 
 	
 	for (int i = 0; i < CUBES; i++) {
