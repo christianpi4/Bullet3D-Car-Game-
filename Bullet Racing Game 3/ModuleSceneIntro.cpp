@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
-#include "PhysBody3D.h"
 #include "ModuleAudio.h"
 
 
@@ -125,6 +124,7 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
+	//sensor1.SetSensor(sensor);
 	return ret;
 }
 

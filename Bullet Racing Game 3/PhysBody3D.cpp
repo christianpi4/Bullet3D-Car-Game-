@@ -53,3 +53,25 @@ const vec3 PhysBody3D::GetPos() const
 	vec3 ret; ret.Set(v.getX(), v.getY(), v.getZ());
 	return ret;
 }
+
+void PhysBody3D::SetSensor(bool is_sensor) {
+
+	
+
+	if (this->is_sensor != is_sensor) {
+
+		this->is_sensor = is_sensor;
+
+		if (is_sensor == true) {
+
+			body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+		}
+
+		else {
+
+			body->setCollisionFlags(body->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+		}
+	}
+}

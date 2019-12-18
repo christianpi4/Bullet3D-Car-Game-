@@ -21,8 +21,12 @@ public:
 	void SetPos(float x, float y, float z);
 	const vec3 GetPos() const;
 
-private:
+	void SetSensor(bool is_sensor);
+
 	btRigidBody* body = nullptr;
+
+private:
+	bool is_sensor = false;
 
 public:
 	p2List<Module*> collision_listeners;

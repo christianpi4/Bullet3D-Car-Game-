@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "PhysBody3D.h"
 
 #define MAX_SNAKE 2
 #define CUBES 500
@@ -46,6 +47,9 @@ public:
 	Cube* ramp;
 	Cube* ramp2;
 
+	//PhysBody3D sensor1;
+	//PhysBody3D sensor2;
+
 	pugi::xml_document map_file;
 	pugi::xml_node node;
 
@@ -55,6 +59,7 @@ public:
 	int cubesAdd = 0;
 	int rampsAdd = 0;
 
-	int	barça_anthem=0;
+	bool sensor;
 
 };
+
