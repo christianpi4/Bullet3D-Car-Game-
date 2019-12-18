@@ -13,6 +13,8 @@ public:
 
 	void Start();
 	void Stop();
+	int delay=4000;
+	bool d = false;
 
 	Uint32 Read();
 

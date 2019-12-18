@@ -45,6 +45,9 @@ bool Application::Init()
 {
 	bool ret = true;
 
+	T.d = true;
+	T.Start();
+
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
 

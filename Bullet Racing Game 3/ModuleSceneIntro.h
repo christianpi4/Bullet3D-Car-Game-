@@ -11,7 +11,7 @@
 #define RAMPS 10
 
 
-struct PhysBody3D;
+class PhysBody3D;
 struct PhysMotor3D;
 
 class ModuleSceneIntro : public Module
@@ -26,7 +26,7 @@ public:
 	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
-
+	void CheckPoint(const vec3 position, float direction);
 	
 	
 public:
@@ -46,9 +46,6 @@ public:
 	Cube* map_list[CUBES];
 	Cube* ramp;
 	Cube* ramp2;
-
-	//PhysBody3D sensor1;
-	//PhysBody3D sensor2;
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;

@@ -2,7 +2,8 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
-
+#include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -123,9 +124,8 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
-	App->audio->PlayMusic("Audio/barca_anthem.ogg");
+	App->audio->PlayMusic("Audio/avicii.ogg");
 
-	//sensor1.SetSensor(sensor);
 	return ret;
 }
 
@@ -145,7 +145,7 @@ bool ModuleSceneIntro::CleanUp()
 
 	delete ramp;
 	delete ramp2;
-
+	
 	return true;
 }
 
@@ -200,6 +200,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
+	float race_time = 0;
+
+	if (App->T.d == false) {
+		race_time = App->T.Read();
+		race_time = race_time / 1000.0f;
+	}
+	
+	char title[80];
+	sprintf_s(title, "Velocity: %.1f Km/h	Time: %.2f", App->player->vehicle->GetKmh(), race_time);
+	App->window->SetTitle(title);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -207,6 +218,37 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 
 }
+
+//void ModuleSceneIntro::CheckPoint(const vec3 pos, float direction)
+//{
+//	float radius = 8;
+//	vec3 pos1(0, pos.y + 2.9, radius);
+//	vec3 pos2(0, pos.y + 2.9, -radius);
+//	float theta = direction * M_PI / 180;
+//	pos1.x += radius * sin(theta); pos1.z = pos1.z * cos(theta);
+//	pos2.x -= radius * sin(theta); pos2.z = pos2.z * cos(theta);
+//
+//	Cube sensor;
+//	vec3 dim(2.0f, 1.0f, 16);
+//	sensor.size = { dim.x, dim.y, dim.z };
+//	sensor.SetPos(pos.x, pos.y + 1, pos.z);
+//	sensor.SetRotation(direction, { 0, 1, 0 });
+//
+//	Cube check_point;
+//	check_point.size = { 2.0f, 2.0f, 2.0f };
+//	check_point.SetPos(pos1.x + pos.x, pos1.y, pos1.z + pos.z);
+//	check_point.color = White;
+//	Cube check_point2;
+//	check_point2.size = { 2.0f, 2.0f, 2.0f };
+//	check_point2.SetPos(pos2.x + pos.x, pos2.y, pos2.z + pos.z);
+//	check_point2.color = White;
+//
+//	PhysBody3D* pb_sensor = App->physics->AddBody(sensor, this, 0.0f, true);
+//	pb_sensor->rotation = theta;
+//	check_points.PushBack(pb_sensor);
+//	prim_check_points.PushBack(check_point);
+//	prim_check_points.PushBack(check_point2);
+//}
 
 pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
 {

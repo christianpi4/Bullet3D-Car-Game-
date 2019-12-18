@@ -6,6 +6,7 @@
 class btRigidBody;
 class Module;
 class vec3;
+class Primitive;
 
 // =================================================
 struct PhysBody3D
@@ -24,6 +25,7 @@ public:
 	void SetSensor(bool is_sensor);
 
 	btRigidBody* body = nullptr;
+
 
 private:
 	bool is_sensor = false;

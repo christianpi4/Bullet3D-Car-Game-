@@ -15,7 +15,13 @@ Timer::Timer()
 void Timer::Start()
 {
 	running = true;
-	started_at = SDL_GetTicks();
+	if (d == true) {
+		started_at = SDL_GetTicks() + delay;
+		d = false;
+	}
+	else {
+		started_at = SDL_GetTicks();
+	}
 }
 
 // ---------------------------------------------
