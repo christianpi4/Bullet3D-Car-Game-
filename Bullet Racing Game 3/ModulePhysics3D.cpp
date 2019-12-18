@@ -388,3 +388,28 @@ int	 DebugDrawer::getDebugMode() const
 {
 	return mode;
 }
+
+PhysBody3D* ModulePhysics3D::Throw(vec3 position, vec3 direction)
+{
+	Sphere sphere(0.5f);
+	float force = 600.0f;
+	sphere.color = Green;
+
+	sphere.SetPos(position.x, position.y+1.5, position.z);
+	direction = direction / sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+	
+	PhysBody3D* aux_sphere = AddBody(sphere, 10.0f);
+	
+	aux_sphere->Push(direction.x * force, direction.y * force, direction.z * force);
+	
+	return aux_sphere;
+
+}
+
+void ModulePhysics3D::UnloadBullet(PhysBody3D* body)
+{
+	bodies.del(bodies.findNode(body));
+	world->removeRigidBody(body->body);
+	delete body;
+	body = NULL;
+}

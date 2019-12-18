@@ -56,8 +56,6 @@ const vec3 PhysBody3D::GetPos() const
 
 void PhysBody3D::SetSensor(bool is_sensor) {
 
-	
-
 	if (this->is_sensor != is_sensor) {
 
 		this->is_sensor = is_sensor;

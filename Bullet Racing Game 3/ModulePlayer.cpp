@@ -8,6 +8,11 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
+
+	for (int i = 0; i < BULLETS; i++) {
+		proyectile[i] = nullptr;
+	}
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -131,6 +136,15 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	for (int i = 0; i < BULLETS; i++) {
+
+		if (proyectile[i] != nullptr) {
+
+			delete proyectile[i];
+
+		}
+
+	}
 
 	return true;
 }
@@ -182,28 +196,25 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		Sphere s;
-		s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
-		float force = 30.0f;
-
-		vec3 forwardVector = vehicle->ForwardVector();
-		vec3 NewCameraPosition = { CarPos.x + forwardVector.x, CarPos.y + forwardVector.y, CarPos.z + forwardVector.z };
-		vec3 CamPos = App->camera->Position + (NewCameraPosition - App->camera->Position);
-
-		App->physics->AddBody(s,10.0f)->Push(-(CamPos.x * force), -(CamPos.y * force), -(CamPos.z * force));
-		s.Render();
-		
-	}
-
-
+	
+	
 	CarPos = vehicle->GetPos();
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	//CameraFollow();
+	CameraFollow();
+
+	for (int i = 0; i < bullets.count(); i++)
+	{
+		Sphere bullet;
+		vec3 pos;
+		PhysBody3D* bullet_render;
+		bullets.at(i, bullet_render);
+		bullet_render->GetPos();
+		bullet.SetPos(pos.x, pos.y, pos.z);
+		bullet.Render();
+	}
 
 	vehicle->Render();
 
@@ -214,7 +225,31 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 
 }
+update_status ModulePlayer::PostUpdate(float dt) {
 
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+
+		//FX
+		vec3 pos= vehicle->GetPos();
+		vec3 fvector = vehicle->ForwardVector();
+		
+		PhysBody3D* bullet = App->physics->Throw({ pos.x, pos.y, pos.z }, { fvector.x, fvector.y, fvector.z });
+
+		bullets.add(bullet);
+
+		if (bullets.count() > BULLETS)
+		{
+			App->physics->UnloadBullet(bullets.getFirst()->data);
+			bullets.del(bullets.getFirst());
+		}
+
+
+	}
+	
+	return UPDATE_CONTINUE;
+
+}
 
 void  ModulePlayer::CameraFollow()
 {
@@ -227,5 +262,16 @@ void  ModulePlayer::CameraFollow()
 	App->camera->Look(CamPos, CarPos);
 }
 
+void ModulePlayer::ResetPlayer()
+{
+	vehicle->SetPos(0, 0, -10);
+
+	while (bullets.count() > 0)
+	{
+		App->physics->UnloadBullet(bullets.getFirst()->data);
+		bullets.del(bullets.getFirst());
+	}
+
+}
 
 

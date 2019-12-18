@@ -30,6 +30,9 @@ public:
 	PhysBody3D* AddBody(const Sphere& sphere, float mass = 1.0f);
 	PhysBody3D* AddBody(const Cube& cube, float mass = 1.0f);
 	PhysBody3D* AddBody(const Cylinder& cylinder, float mass = 1.0f);
+	PhysBody3D* Throw(vec3 position, vec3 direction);
+	void UnloadBullet(PhysBody3D* body);
+
 	PhysVehicle3D* AddVehicle(const VehicleInfo& info);
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);

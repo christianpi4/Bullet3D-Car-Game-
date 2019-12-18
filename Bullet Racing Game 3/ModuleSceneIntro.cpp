@@ -96,7 +96,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-
+	App->audio->PlayMusic("Audio/barca_anthem.ogg");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -154,7 +154,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-	/*Cube plane(600, 2, 600);
+	Cube plane(600, 2, 600);
 	plane.SetPos(0, -1, 0);
 	plane.color = Cyan;
 	plane.Render();
@@ -162,7 +162,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	Cube plane2(600, 2, 600);
 	plane2.SetPos(0, 100, 0);
 	plane2.color = Cyan;
-	plane2.Render();*/
+	plane2.Render();
 
 	Cube plane3(2, 100, 600);
 	plane3.SetPos(-300, 50, 0);
@@ -198,7 +198,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
-	App->audio->PlayMusic("Audio/barça_anthem.ogg");
+	
 
 
 	return UPDATE_CONTINUE;
