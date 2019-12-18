@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
-#include "ModuleAudio.h"
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -117,12 +116,14 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp = *ramp;
 	App->physics->AddBody(aux_ramp, 0);
 
-	ramp2 = new Cube(5, 0.1, 2.5);
+	ramp2 = new Cube(10, 0.1, 14);
 	ramp2->color = Gold;
-	ramp2->SetPos(10, 0, 0);
-	ramp2->SetRotation(45, { 0,0,1 });
+	ramp2->SetPos(-20, 1.23, 97.5f);
+	ramp2->SetRotation(25, { 0,0,-1 });
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
+
+	App->audio->PlayMusic("Audio/barca_anthem.ogg");
 
 	//sensor1.SetSensor(sensor);
 	return ret;
@@ -198,7 +199,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
-	App->audio->PlayMusic("Audio/barça_anthem.ogg");
 
 
 	return UPDATE_CONTINUE;
