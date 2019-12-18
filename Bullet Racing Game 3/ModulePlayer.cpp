@@ -158,6 +158,11 @@ update_status ModulePlayer::Update(float dt)
 	{
 		acceleration = MAX_ACCELERATION;
 
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		{
+			acceleration *= 2;
+		}
+
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 		if (turn < TURN_DEGREES)
@@ -174,6 +179,11 @@ update_status ModulePlayer::Update(float dt)
 	else if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		acceleration = -MAX_ACCELERATION;
+
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		{
+			acceleration *= 2;
+		}
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
@@ -196,8 +206,6 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
-	
-	
 	CarPos = vehicle->GetPos();
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -208,10 +216,11 @@ update_status ModulePlayer::Update(float dt)
 	for (int i = 0; i < bullets.count(); i++)
 	{
 		Sphere bullet;
-		vec3 pos;
+		bullet.radius = 0.5f;
+
 		PhysBody3D* bullet_render;
 		bullets.at(i, bullet_render);
-		bullet_render->GetPos();
+		vec3 pos = bullet_render->GetPos();
 		bullet.SetPos(pos.x, pos.y, pos.z);
 		bullet.Render();
 	}
@@ -227,7 +236,7 @@ update_status ModulePlayer::Update(float dt)
 }
 update_status ModulePlayer::PostUpdate(float dt) {
 
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	if (App->input->GetMouseButton(1) == KEY_DOWN)
 	{
 
 		//FX
