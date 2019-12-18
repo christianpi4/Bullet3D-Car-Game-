@@ -110,6 +110,8 @@ bool ModuleSceneIntro::Start()
 		}
 	}
 
+	CreateHinges({ 1,0,0 }, { 3,0,0 }, 1.5);
+
 	ramp = new Cube(14, 0.1, 10);
 	ramp->color = Gold;
 	ramp->SetPos(0, 1.25, 0);
@@ -145,6 +147,7 @@ bool ModuleSceneIntro::CleanUp()
 
 	delete ramp;
 	delete ramp2;
+
 	
 	return true;
 }
@@ -155,7 +158,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
-
 	Cube floor(600, 2, 600);
 	floor.SetPos(0, -1, 0);
 	floor.color = Cyan;
@@ -196,6 +198,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 		}
 	}
+
 
 	ramp->Render();
 	ramp2->Render();
@@ -270,6 +273,22 @@ pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
 	}
 
 	return ret;
+
+}
+
+void ModuleSceneIntro::CreateHinges(vec3 pos, vec3 pos2, float radius) {
+
+	Sphere* box = new Sphere(radius);
+	box->SetPos(pos.x, pos.y, pos.z);
+	Sphere aux_box = *box;
+	PhysBody3D* bodyA = App->physics->AddBody(aux_box, 3.0f);
+
+	Sphere* box2 = new Sphere(radius);
+	box2->SetPos(pos2.x, pos2.y, pos2.z);
+	Sphere aux_box2 = *box2;
+	PhysBody3D* bodyB = App->physics->AddBody(aux_box2, 3.0f);
+	App->physics->AddConstraintHinge(*bodyA, *bodyB, { 0,0,0 }, { 3,0,0 }, { 0,1,0 }, { 0,1,0 }, true);
+
 
 }
 

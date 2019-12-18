@@ -27,7 +27,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	void CheckPoint(const vec3 position, float direction);
-	
+	void CreateHinges(vec3 pos, vec3 pos2, float radius);
 	
 public:
 	
@@ -46,6 +46,9 @@ public:
 	Cube* map_list[CUBES];
 	Cube* ramp;
 	Cube* ramp2;
+	
+	Sphere* box;
+	Sphere* box2;
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;
