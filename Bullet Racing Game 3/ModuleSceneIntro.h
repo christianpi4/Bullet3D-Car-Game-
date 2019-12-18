@@ -55,6 +55,6 @@ public:
 	int cubesAdd = 0;
 	int rampsAdd = 0;
 
-	int barça_anthem;
+	int	barça_anthem=0;
 
 };

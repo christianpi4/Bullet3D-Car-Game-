@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "ModuleAudio.h"
 
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -197,7 +198,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
-	App->audio->PlayMusic("Game/Audio/barça_anthem.ogg");
+	App->audio->PlayMusic("Audio/barça_anthem.ogg");
 
 
 	return UPDATE_CONTINUE;
