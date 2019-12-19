@@ -129,9 +129,12 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 0, 12);
+	vehicle->SetPos(-55, 0, 32);
 	btQuaternion orientation = { 0, 0, 0, -1 };
 	vehicle->SetRotation(orientation);
+
+	
+
 
 	return true;
 }
@@ -212,21 +215,19 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
 	{
-		if(restart==false){
+
 			ResetPlayer();
-		}
+
 		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		
-		restart = true;
 
-		if (restart == true) {
 			vehicle->SetPos(App->scene_intro->newpos.x, App->scene_intro->newpos.y, App->scene_intro->newpos.z);
 			acceleration = 0.0f;
 			brake = BRAKE_POWER * 100;
-			restart = false;
-		}
+
+
 
 	}
 
@@ -235,7 +236,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	CameraFollow();
+	//CameraFollow();
 
 	for (int i = 0; i < bullets.count(); i++)
 	{

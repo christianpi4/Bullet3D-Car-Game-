@@ -21,6 +21,8 @@ D: Turn right.
 
 A: Turn left.
 
+SHIFT: Turbo
+
 R: Respawn car.
 
 SPACE: Respawn in checkpoint.

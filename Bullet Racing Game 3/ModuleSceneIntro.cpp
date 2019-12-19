@@ -96,22 +96,23 @@ bool ModuleSceneIntro::Start()
 
 	ramp = new Cube(14, 0.1, 10);
 	ramp->color = Gold;
-	ramp->SetPos(-40, 1.25, 0);
-	//ramp->SetRotation(-15, { -1,0,0 });
-	ramp->SetRotation(45, { -1,-1,-1 });
+	ramp->SetPos(-55.5f, 1.25f, 5);
+	ramp->SetRotation(30, { 1, 0, 0});
 
 	Cube aux_ramp = *ramp;
 	App->physics->AddBody(aux_ramp, 0);
 
 	ramp2 = new Cube(10, 0.1, 14);
 	ramp2->color = Gold;
-	ramp2->SetPos(-20, 1.23, 97.5f);
+	ramp2->SetPos(-20, 1.23f, 97.5f);
 	ramp2->SetRotation(25, { 0,0,-1 });
+
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
 	CheckPoint({ 0,2,20 }, 0, { 0,0,1 });
 	CheckPoint2({ 0,2,97 }, -90,{0, 1, 0});
+	CheckPoint3({ 20,2,-92 }, 135, { 0, 1, 0 });
 
 
 	App->audio->PlayMusic("Audio/avicii.ogg");
@@ -196,8 +197,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
-
-
 	float race_time = 0;
 
 	if (App->T.d == false) {
@@ -215,7 +214,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation, vec3 direction)
 {
-	cube_sensor.size.x = 10;
+	cube_sensor.size.x = 14;
 	cube_sensor.size.y = 4;
 	cube_sensor.size.z = 0.1f;
 	cube_sensor.SetPos(pos.x, pos.y, pos.z);
@@ -241,20 +240,30 @@ void ModuleSceneIntro::CheckPoint2(const vec3 pos, float rotation, vec3 directio
 	check_p2->is_sensor = true;
 }
 
+void ModuleSceneIntro::CheckPoint3(const vec3 pos, float rotation, vec3 direction)
+{
+	cube_sensor3.size.x = 10;
+	cube_sensor3.size.y = 4;
+	cube_sensor3.size.z = 0.1f;
+	cube_sensor3.SetPos(pos.x, pos.y, pos.z);
+	cube_sensor3.SetRotation(rotation, direction);
+	check_p2 = App->physics->AddBody(cube_sensor3, 0);
+	check_p2->GetTransform(&cube_sensor3.transform);
+	check_p2->SetSensor(true);
+	check_p2->collision_listeners.add(this);
+	check_p2->is_sensor = true;
+}
+
 
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if ((body1 == check_p2) && body2 == (PhysBody3D*)App->player->vehicle)
+	if ((body1 == check_p || body1 == check_p2 || body1 == check_p3) && body2 == (PhysBody3D*)App->player->vehicle)
 	{
 		newpos = App->player->vehicle->GetPos();
 		sensor = true;
 		LOG("PASA");
 		
-	}
-	if (body1 == check_p) {
-		lap++;
-		sensor = true;
 	}
 
 }

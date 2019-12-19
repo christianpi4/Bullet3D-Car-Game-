@@ -29,6 +29,7 @@ public:
 	bool CleanUp();
 	void CheckPoint(const vec3 position, float rotation, vec3 direction);
 	void CheckPoint2(const vec3 position, float rotation, vec3 direction);
+	void CheckPoint3(const vec3 position, float rotation, vec3 direction);
 
 	void CreateHinges(vec3 pos, vec3 size);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
@@ -58,11 +59,13 @@ public:
 	PhysBody3D* check_p;
 	Cube cube_sensor2;
 	PhysBody3D* check_p2;
+	Cube cube_sensor3;
+	PhysBody3D* check_p3;
 	vec3 newpos;
 	bool sensor=false;
 
 	//laps
-	int lap = 0;
+	int lap = 1;
 
 	
 	Sphere* sphere_list[SPHERES];

@@ -37,7 +37,6 @@ public:
 
 	p2List<PhysBody3D*> bullets;
 	bool camera = true;
-	bool reset = false;
 	Sphere* proyectile[BULLETS];
 	int proyectileAdd = 0;
 
