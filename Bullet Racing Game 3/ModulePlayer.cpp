@@ -129,7 +129,7 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 0, 12);
+	vehicle->SetPos(-55, 0, 32);
 
 	return true;
 }
@@ -223,7 +223,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	CameraFollow();
+	//CameraFollow();
 
 	for (int i = 0; i < bullets.count(); i++)
 	{
