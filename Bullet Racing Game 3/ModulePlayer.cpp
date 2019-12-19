@@ -130,6 +130,7 @@ bool ModulePlayer::Start()
 	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(-55, 0, 45);
+	
 
 
 	return true;
@@ -220,8 +221,11 @@ update_status ModulePlayer::Update(float dt)
 		
 
 			vehicle->SetPos(App->scene_intro->newpos.x, App->scene_intro->newpos.y, App->scene_intro->newpos.z);
-			acceleration = 0.0f;
-			brake = BRAKE_POWER * 100;
+			btQuaternion orientation = { 0, 0, 0, 1 };
+			vehicle->SetRotation(orientation);
+			vehicle->GetBody()->setAngularVelocity({ 0, 0, 0 });
+			vehicle->GetBody()->setLinearVelocity({ 0, 0, 0 });
+			
 
 
 
