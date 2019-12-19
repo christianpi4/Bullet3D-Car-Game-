@@ -154,67 +154,67 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();*/
 	Cube floor(600, 2, 600);
 	floor.SetPos(0, -1, 0);
-	floor.color = Cyan;
-	floor.Render();
+floor.color = Cyan;
+floor.Render();
 
-	Cube roof(600, 2, 600);
-	roof.SetPos(0, 100, 0);
-	roof.color = Cyan;
-	roof.Render();
+Cube roof(600, 2, 600);
+roof.SetPos(0, 100, 0);
+roof.color = Cyan;
+roof.Render();
 
-	Cube wall_left(2, 100, 600);
-	wall_left.SetPos(-300, 50, 0);
-	wall_left.color = Cyan;
-	wall_left.Render();
-	
-	Cube wall_right(2, 100, 600);
-	wall_right.SetPos(300, 50, 0);
-	wall_right.color = Cyan;
-	wall_right.Render();
+Cube wall_left(2, 100, 600);
+wall_left.SetPos(-300, 50, 0);
+wall_left.color = Cyan;
+wall_left.Render();
 
-	Cube wall_front(600, 100, 2);
-	wall_front.SetPos(0, 50, -300);
-	wall_front.color = Cyan;
-	wall_front.Render();
+Cube wall_right(2, 100, 600);
+wall_right.SetPos(300, 50, 0);
+wall_right.color = Cyan;
+wall_right.Render();
 
-	Cube wall_back(600, 100, 2);
-	wall_back.SetPos(0, 50, 300);
-	wall_back.color = Cyan;
-	wall_back.Render();
+Cube wall_front(600, 100, 2);
+wall_front.SetPos(0, 50, -300);
+wall_front.color = Cyan;
+wall_front.Render();
 
-	if (pb_cubes.Count() != 0 && s_cubes.Count() != 0 && s_cubes.Count() == pb_cubes.Count()) {
-		for (int i = 0; i < s_cubes.Count(); i++) {
-			pb_cubes[i]->GetTransform(&s_cubes[i].transform);
-			s_cubes[i].Render();
-		}
+Cube wall_back(600, 100, 2);
+wall_back.SetPos(0, 50, 300);
+wall_back.color = Cyan;
+wall_back.Render();
 
+if (pb_cubes.Count() != 0 && s_cubes.Count() != 0 && s_cubes.Count() == pb_cubes.Count()) {
+	for (int i = 0; i < s_cubes.Count(); i++) {
+		pb_cubes[i]->GetTransform(&s_cubes[i].transform);
+		s_cubes[i].Render();
 	}
 
-	for (int i = 0; i < CUBES; i++) {
-		
-		if (map_list[i] != nullptr)
-		{
-			map_list[i]->Render();
-		}
+}
+
+for (int i = 0; i < CUBES; i++) {
+
+	if (map_list[i] != nullptr)
+	{
+		map_list[i]->Render();
 	}
+}
 
-	ramp->Render();
-	ramp2->Render();
+ramp->Render();
+ramp2->Render();
 
-	
 
-	float race_time = 0;
 
-	if (App->T.d == false) {
-		race_time = App->T.Read();
-		race_time = race_time / 1000.0f;
-	}
-	
-	char title[80];
-	sprintf_s(title, "Velocity: %.1f Km/h	Time: %.2f", App->player->vehicle->GetKmh(), race_time);
-	App->window->SetTitle(title);
+float race_time = 0;
 
-	return UPDATE_CONTINUE;
+if (App->T.d == false) {
+	race_time = App->T.Read();
+	race_time = race_time / 1000.0f;
+}
+
+char title[80];
+sprintf_s(title, "Velocity: %.1f Km/h Time: %.2f Current lap: %i", App->player->vehicle->GetKmh(), race_time, lap);
+App->window->SetTitle(title);
+
+return UPDATE_CONTINUE;
 }
 
 
@@ -222,7 +222,7 @@ void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation, vec3 direction
 {
 	cube_sensor.size.x = 10;
 	cube_sensor.size.y = 4;
-	cube_sensor.size.z = 1;
+	cube_sensor.size.z = 0.1f;
 	cube_sensor.SetPos(pos.x, pos.y, pos.z);
 	cube_sensor.SetRotation(rotation, direction);
 	check_p = App->physics->AddBody(cube_sensor, 0);
@@ -236,7 +236,7 @@ void ModuleSceneIntro::CheckPoint2(const vec3 pos, float rotation, vec3 directio
 {
 	cube_sensor2.size.x = 10;
 	cube_sensor2.size.y = 4;
-	cube_sensor2.size.z = 1;
+	cube_sensor2.size.z = 0.1f;
 	cube_sensor2.SetPos(pos.x, pos.y, pos.z);
 	cube_sensor2.SetRotation(rotation, direction);
 	check_p2 = App->physics->AddBody(cube_sensor2, 0);
@@ -250,11 +250,14 @@ void ModuleSceneIntro::CheckPoint2(const vec3 pos, float rotation, vec3 directio
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if ((body1 ==check_p||body1==check_p2)&& body2 == (PhysBody3D*)App->player->vehicle)
+	if ((body1 == check_p2) && body2 == (PhysBody3D*)App->player->vehicle)
 	{
-
-		LOG("PASA");
-		newpos= App->player->vehicle->GetPos();
+		newpos = App->player->vehicle->GetPos();
+		sensor = true;
+		
+	}
+	if (body1 == check_p) {
+		lap++;
 		sensor = true;
 	}
 

@@ -59,8 +59,10 @@ public:
 	Cube cube_sensor2;
 	PhysBody3D* check_p2;
 	vec3 newpos;
-
 	bool sensor=false;
+
+	//laps
+	int lap = 0;
 
 	
 	Sphere* sphere_list[SPHERES];
