@@ -129,11 +129,7 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(-55, 0, 32);
-	btQuaternion orientation = { 0, 0, 0, -1 };
-	vehicle->SetRotation(orientation);
-
-	
+	vehicle->SetPos(-55, 0, 45);
 
 
 	return true;

@@ -76,6 +76,7 @@ bool ModuleSceneIntro::Start()
 {
 
 	CreateHinges({0,0,-7}, { 10,3,1 });
+	CreateHinges({ 30,0,97.5f }, { 1,3,12});
 
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -97,7 +98,7 @@ bool ModuleSceneIntro::Start()
 	ramp = new Cube(14, 0.1, 10);
 	ramp->color = Gold;
 	ramp->SetPos(-55.5f, 1.25f, 5);
-	ramp->SetRotation(30, { 1, 0, 0});
+	ramp->SetRotation(30, { -1, 0, 0});
 
 	Cube aux_ramp = *ramp;
 	App->physics->AddBody(aux_ramp, 0);
@@ -105,7 +106,7 @@ bool ModuleSceneIntro::Start()
 	ramp2 = new Cube(10, 0.1, 14);
 	ramp2->color = Gold;
 	ramp2->SetPos(-20, 1.23f, 97.5f);
-	ramp2->SetRotation(25, { 0,0,-1 });
+	ramp2->SetRotation(25, {0,0,1 });
 
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
