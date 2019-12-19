@@ -5,6 +5,7 @@
 #include "Primitive.h"
 #include "p2DynArray.h"
 #include "PhysBody3D.h"
+#include "ModuleSceneIntro.h"
 
 struct PhysVehicle3D;
 struct PhysBody3D;
@@ -26,6 +27,7 @@ public:
 	bool CleanUp();
 	void CameraFollow();
 	void ResetPlayer();
+	//void OnCollision(PhysVehicle3D* body1, PhysBody3D* body2);
 
 public:
 

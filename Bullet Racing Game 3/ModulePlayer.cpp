@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModuleSceneIntro.h"
+
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -225,11 +227,8 @@ update_status ModulePlayer::Update(float dt)
 		bullet.Render();
 	}
 
-	vehicle->Render();
 
-	//char title[80];
-	//sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	//App->window->SetTitle(title);
+	vehicle->Render();
 
 	return UPDATE_CONTINUE;
 
@@ -270,6 +269,17 @@ void  ModulePlayer::CameraFollow()
 
 	App->camera->Look(CamPos, CarPos);
 }
+
+//void ModulePlayer::OnCollision(PhysVehicle3D* body1, PhysBody3D* body2)
+//{
+//	if ((body1 == vehicle) && (body2 == App->scene_intro->check_p))
+//	{
+//		LOG("PASA");
+//		App->scene_intro->newpos= App->scene_intro->check_p->GetPos();
+//		App->scene_intro->sensor = true;
+//	}
+//
+//}
 
 void ModulePlayer::ResetPlayer()
 {

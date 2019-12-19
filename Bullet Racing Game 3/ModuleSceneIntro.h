@@ -5,6 +5,7 @@
 #include "Primitive.h"
 #include "PugiXml\src\pugixml.hpp"
 #include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 #define MAX_SNAKE 2
 #define CUBES 500
@@ -27,9 +28,9 @@ public:
 	update_status Update(float dt);
 	//update_status PostUpdate(float dt);
 	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2) override;
 	bool CleanUp();
-	void CheckPoint(const vec3 position, float direction);
+	void CheckPoint(const vec3 position);
 	void CreateHinges(vec3 pos, vec3 pos2, float radius);
 	
 public:
@@ -51,6 +52,13 @@ public:
 	Cube* ramp2;
 	PhysBody3D* bodyA = nullptr;
 	PhysBody3D* bodyB = nullptr;
+
+	//checkpoints
+	Cube cube_sensor;
+	PhysBody3D* check_p;
+	vec3 newpos;
+
+	bool sensor=false;
 	
 	Sphere* sphere_list[SPHERES];
 	Sphere* sphere_list2[SPHERES2];
@@ -66,7 +74,6 @@ public:
 	int sphereAdd = 0, sphereAdd2 = 0;
 	int rampsAdd = 0;
 
-	bool sensor;
 
 };
 

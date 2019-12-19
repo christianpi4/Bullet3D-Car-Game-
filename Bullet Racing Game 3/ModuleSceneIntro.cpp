@@ -183,6 +183,8 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
+	CheckPoint({ 0,2,20 });
+
 	App->audio->PlayMusic("Audio/avicii.ogg");
 
 	return ret;
@@ -342,39 +344,31 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	PhysBody3D* b;
+	if ((body1->GetBody() != App->player->vehicle->GetBody()))
+	{
+		b = body1;
+		LOG("PASA");
+		//newpos=check_p->GetPos();
+		//sensor = true;
+	}
+	else {
+		b = body1;
+	}
 
 }
 
-//void ModuleSceneIntro::CheckPoint(const vec3 pos, float direction)
-//{
-//	float radius = 8;
-//	vec3 pos1(0, pos.y + 2.9, radius);
-//	vec3 pos2(0, pos.y + 2.9, -radius);
-//	float theta = direction * M_PI / 180;
-//	pos1.x += radius * sin(theta); pos1.z = pos1.z * cos(theta);
-//	pos2.x -= radius * sin(theta); pos2.z = pos2.z * cos(theta);
-//
-//	Cube sensor;
-//	vec3 dim(2.0f, 1.0f, 16);
-//	sensor.size = { dim.x, dim.y, dim.z };
-//	sensor.SetPos(pos.x, pos.y + 1, pos.z);
-//	sensor.SetRotation(direction, { 0, 1, 0 });
-//
-//	Cube check_point;
-//	check_point.size = { 2.0f, 2.0f, 2.0f };
-//	check_point.SetPos(pos1.x + pos.x, pos1.y, pos1.z + pos.z);
-//	check_point.color = White;
-//	Cube check_point2;
-//	check_point2.size = { 2.0f, 2.0f, 2.0f };
-//	check_point2.SetPos(pos2.x + pos.x, pos2.y, pos2.z + pos.z);
-//	check_point2.color = White;
-//
-//	PhysBody3D* pb_sensor = App->physics->AddBody(sensor, this, 0.0f, true);
-//	pb_sensor->rotation = theta;
-//	check_points.PushBack(pb_sensor);
-//	prim_check_points.PushBack(check_point);
-//	prim_check_points.PushBack(check_point2);
-//}
+void ModuleSceneIntro::CheckPoint(const vec3 pos)
+{
+	cube_sensor.size.x = 10;
+	cube_sensor.size.y = 4;
+	cube_sensor.size.z = 1;
+	cube_sensor.SetPos(pos.x, pos.y, pos.z);
+	check_p = App->physics->AddBody(cube_sensor, 0);
+	check_p->GetTransform(&cube_sensor.transform);
+	check_p->SetSensor(true);
+	check_p->collision_listeners.add(this);
+}
 
 pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
 {
