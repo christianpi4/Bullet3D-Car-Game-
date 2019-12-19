@@ -1,8 +1,9 @@
 <map>
 
-<cube_size	x="1" y="2" z="3"/> 
-
-<!-- FIRST STRAIGHT -->
+<cube_size	x="1" y="2" z="3"/>
+<hinge	x="0" y="1.5" z="-8" x2="3" y2="1.5" z2="-8" r="1.5"/>
+  
+  <!-- FIRST STRAIGHT -->
 
   <box x="-7" y="0" z="-22" rotation="0"/>
   <box x="-7" y="0" z="-18" rotation="0"/>

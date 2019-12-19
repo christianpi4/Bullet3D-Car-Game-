@@ -10,6 +10,14 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	for (int i = 0; i < CUBES; i++) {
 		map_list[i] = nullptr;
 	}
+
+	for (int i = 0; i < SPHERES; i++) {
+		sphere_list[i] = nullptr;
+	}
+
+	for (int j = 0; j < SPHERES2; j++) {
+		sphere_list2[j] = nullptr;
+	}
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -31,7 +39,36 @@ bool ModuleSceneIntro::Awake() {
 		LOG("%i %i %i", sizex, sizey, sizez);
 	}
 
+	for (cube = node.child("hinge"); cube && ret; cube = cube.next_sibling("hinge")) {
+
+		hingex = cube.attribute("x").as_float();
+		hingey = cube.attribute("y").as_float();
+		hingez = cube.attribute("z").as_float();
+
+		hinge2x = cube.attribute("x2").as_float();
+		hinge2y = cube.attribute("y2").as_float();
+		hinge2z = cube.attribute("z2").as_float();
+
+		radius = cube.attribute("r").as_float();
+
+		LOG("%f %f %f %f %f %f %f", hingex, hingey, hingez, hinge2x, hinge2y, hinge2z, radius);
+
+		Sphere* sphere = new Sphere(radius);
+		sphere->SetPos(hingex, hingey, hingez);
+
+		Sphere* sphere2 = new Sphere(radius);
+		sphere2->SetPos(hinge2x, hinge2y, hinge2z);
+		
+		sphere_list[sphereAdd] = sphere;
+		sphere_list2[sphereAdd2] = sphere2;
+
+		sphereAdd++;
+		sphereAdd2++;
+
+	}
+
 	for (cube = node.child("box"); cube && ret; cube = cube.next_sibling("box")) {
+		
 		Cube* box = new Cube(sizex, sizey+1, sizez);
 
 		x = cube.attribute("x").as_float();
@@ -110,7 +147,27 @@ bool ModuleSceneIntro::Start()
 		}
 	}
 
-	CreateHinges({ 1,0,0 }, { 3,0,0 }, 1.5);
+	for (int i = 0; i < SPHERES; i++) {
+
+		for (int j = 0; j < SPHERES2; j++) {
+
+			if (sphere_list[i] != nullptr)
+			{
+				if (sphere_list2[j] != nullptr)
+				{
+
+					Sphere aux_sphere = *sphere_list[i];
+					Sphere aux_sphere2 = *sphere_list2[j];
+					PhysBody3D* bodyA = App->physics->AddBody(aux_sphere, 1);
+					PhysBody3D* bodyB = App->physics->AddBody(aux_sphere2, 1);
+					App->physics->AddConstraintHinge(*bodyA, *bodyB, { 0,0,0 }, { 3,0,0 }, { 0,1,0 }, { 0,1,0 }, false);
+
+				}
+
+			}
+		}
+
+	}
 
 	ramp = new Cube(14, 0.1, 10);
 	ramp->color = Gold;
@@ -144,6 +201,22 @@ bool ModuleSceneIntro::CleanUp()
 		}
 
 	}
+
+	for (int i = 0; i < SPHERES; i++) {
+
+		if (sphere_list[i] != nullptr) {
+
+			if (sphere_list2[i] != nullptr) {
+
+				delete sphere_list[i];
+				delete sphere_list2[i];
+
+			}
+
+		}
+
+	}
+
 
 	delete ramp;
 	delete ramp2;
@@ -193,12 +266,41 @@ update_status ModuleSceneIntro::Update(float dt)
 		
 		if (map_list[i] != nullptr)
 		{
-			
 			map_list[i]->Render();
-
 		}
 	}
 
+	for (int i = 0; i < SPHERES; i++) {
+
+		for (int j = 0; j < SPHERES2; j++) {
+
+			if (sphere_list[i] != nullptr)
+			{
+				if (sphere_list2[j] != nullptr)
+				{
+
+					sphere_list[i]->Render();
+					sphere_list2[j]->Render();
+
+				}
+
+			}
+			
+		}
+		
+	}
+
+	/*for (int i = 0; i < bullets.count(); i++)
+	{
+		Sphere bullet;
+		bullet.radius = 0.5f;
+
+		PhysBody3D* bullet_render;
+		bullets.at(i, bullet_render);
+		vec3 pos = bullet_render->GetPos();
+		bullet.SetPos(pos.x, pos.y, pos.z);
+		bullet.Render();
+	}*/
 
 	ramp->Render();
 	ramp2->Render();
@@ -216,6 +318,27 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	return UPDATE_CONTINUE;
 }
+
+/*update_status ModulePlayer::PostUpdate(float dt) {
+
+		//FX
+		vec3 pos = App->player->vehicle->GetPos();
+		vec3 fvector = App->player->vehicle->ForwardVector();
+
+		PhysBody3D* bullet = App->physics->Throw({ pos.x, pos.y, pos.z }, { fvector.x, fvector.y, fvector.z });
+
+		bullets.add(bullet);
+
+		if (bullets.count() > BULLETS)
+		{
+			App->physics->UnloadBullet(bullets.getFirst()->data);
+			bullets.del(bullets.getFirst());
+		}
+
+
+	return UPDATE_CONTINUE;
+
+}*/
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
@@ -276,19 +399,4 @@ pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
 
 }
 
-void ModuleSceneIntro::CreateHinges(vec3 pos, vec3 pos2, float radius) {
-
-	Sphere* box = new Sphere(radius);
-	box->SetPos(pos.x, pos.y, pos.z);
-	Sphere aux_box = *box;
-	PhysBody3D* bodyA = App->physics->AddBody(aux_box, 3.0f);
-
-	Sphere* box2 = new Sphere(radius);
-	box2->SetPos(pos2.x, pos2.y, pos2.z);
-	Sphere aux_box2 = *box2;
-	PhysBody3D* bodyB = App->physics->AddBody(aux_box2, 3.0f);
-	App->physics->AddConstraintHinge(*bodyA, *bodyB, { 0,0,0 }, { 3,0,0 }, { 0,1,0 }, { 0,1,0 }, true);
-
-
-}
 
