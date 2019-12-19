@@ -14,7 +14,6 @@
 #define RAMPS 10
 
 
-class PhysBody3D;
 struct PhysMotor3D;
 struct PhysBody3D;
 class ModuleSceneIntro : public Module
@@ -27,10 +26,10 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
-	void OnCollision(PhysBody3D* body1, PhysBody3D* body2) override;
 	bool CleanUp();
-	void CheckPoint(const vec3 position);
+	void CheckPoint(const vec3 position, float rotation);
 	void CreateHinges(vec3 pos, vec3 size);
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	
 public:
 	
@@ -58,6 +57,10 @@ public:
 	vec3 newpos;
 
 	bool sensor=false;
+
+
+	//p2DynArray<PhysBody3D*> check_points;
+	//p2DynArray<Cube> prim_check_points;
 	
 	Sphere* sphere_list[SPHERES];
 	Sphere* sphere_list2[SPHERES2];

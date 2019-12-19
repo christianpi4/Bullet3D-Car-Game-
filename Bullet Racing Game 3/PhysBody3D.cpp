@@ -6,7 +6,9 @@
 
 // =================================================
 PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
-{}
+{
+	body->setUserPointer(this);
+}
 
 // ---------------------------------------------------------
 PhysBody3D::~PhysBody3D()
@@ -76,7 +78,7 @@ void PhysBody3D::SetSensor(bool is_sensor) {
 	}
 }
 
-btRigidBody * PhysBody3D::GetBody()
+btRigidBody* PhysBody3D::GetBody()
 {
 	return body;
 }

@@ -27,7 +27,6 @@ public:
 	bool CleanUp();
 	void CameraFollow();
 	void ResetPlayer();
-	//void OnCollision(PhysVehicle3D* body1, PhysBody3D* body2);
 
 public:
 

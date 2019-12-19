@@ -26,9 +26,12 @@ public:
 
 	btRigidBody* body = nullptr;
 
+	bool is_sensor;
+	bool activate_sensor = false;
+
+	float			rotation;
 
 private:
-	bool is_sensor = false;
 
 public:
 	p2List<Module*> collision_listeners;

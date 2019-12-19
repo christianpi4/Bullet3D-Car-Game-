@@ -212,6 +212,11 @@ update_status ModulePlayer::Update(float dt)
 	{
 		ResetPlayer();
 	}
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		vehicle->SetPos(App->scene_intro->newpos.x, App->scene_intro->newpos.y, App->scene_intro->newpos.z);
+		acceleration = 0.0f;
+		brake = BRAKE_POWER * 100;
+	}
 
 	CarPos = vehicle->GetPos();
 	vehicle->ApplyEngineForce(acceleration);
@@ -274,17 +279,6 @@ void  ModulePlayer::CameraFollow()
 
 	App->camera->Look(CamPos, CarPos);
 }
-
-//void ModulePlayer::OnCollision(PhysVehicle3D* body1, PhysBody3D* body2)
-//{
-//	if ((body1 == vehicle) && (body2 == App->scene_intro->check_p))
-//	{
-//		LOG("PASA");
-//		App->scene_intro->newpos= App->scene_intro->check_p->GetPos();
-//		App->scene_intro->sensor = true;
-//	}
-//
-//}
 
 void ModulePlayer::ResetPlayer()
 {

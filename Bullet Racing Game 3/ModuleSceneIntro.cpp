@@ -108,7 +108,7 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
-	CheckPoint({ 0,2,20 });
+	CheckPoint({ 0,2,20 }, 0);
 
 	App->audio->PlayMusic("Audio/avicii.ogg");
 
@@ -197,6 +197,8 @@ update_status ModuleSceneIntro::Update(float dt)
 	ramp->Render();
 	ramp2->Render();
 
+	
+
 	float race_time = 0;
 
 	if (App->T.d == false) {
@@ -211,32 +213,32 @@ update_status ModuleSceneIntro::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
-	PhysBody3D* b;
-	if ((body1->GetBody() != App->player->vehicle->GetBody()))
-	{
-		b = body1;
-		LOG("PASA");
-		//newpos=check_p->GetPos();
-		//sensor = true;
-	}
-	else {
-		b = body1;
-	}
 
-}
-
-void ModuleSceneIntro::CheckPoint(const vec3 pos)
+void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation)
 {
 	cube_sensor.size.x = 10;
 	cube_sensor.size.y = 4;
 	cube_sensor.size.z = 1;
 	cube_sensor.SetPos(pos.x, pos.y, pos.z);
+	cube_sensor.SetRotation(rotation, { 0,0,1 });
 	check_p = App->physics->AddBody(cube_sensor, 0);
 	check_p->GetTransform(&cube_sensor.transform);
 	check_p->SetSensor(true);
 	check_p->collision_listeners.add(this);
+	check_p->is_sensor = true;
+}
+
+
+void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	if (body1 ==check_p && body2 == (PhysBody3D*)App->player->vehicle)
+	{
+
+		LOG("PASA");
+		newpos= App->player->vehicle->GetPos();
+		sensor = true;
+	}
+
 }
 
 pugi::xml_node ModuleSceneIntro::LoadCircuit(pugi::xml_document& map_file) const
