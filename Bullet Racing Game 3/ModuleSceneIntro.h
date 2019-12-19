@@ -15,7 +15,7 @@
 
 class PhysBody3D;
 struct PhysMotor3D;
-
+struct PhysBody3D;
 class ModuleSceneIntro : public Module
 {
 public:
@@ -25,12 +25,11 @@ public:
 	bool Awake();
 	bool Start();
 	update_status Update(float dt);
-	//update_status PostUpdate(float dt);
 	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	void CheckPoint(const vec3 position, float direction);
-	void CreateHinges(vec3 pos, vec3 pos2, float radius);
+	void CreateHinges(vec3 pos, vec3 size);
 	
 public:
 	
@@ -49,24 +48,20 @@ public:
 	Cube* map_list[CUBES];
 	Cube* ramp;
 	Cube* ramp2;
-	PhysBody3D* bodyA = nullptr;
-	PhysBody3D* bodyB = nullptr;
-	
-	Sphere* sphere_list[SPHERES];
-	Sphere* sphere_list2[SPHERES2];
 
 	pugi::xml_document map_file;
 	pugi::xml_node node;
 
 	float x = 0, y = 0, z = 0;
 	int sizex = 0, sizey = 0, sizez = 0, rot = 0;
-	float hingex = 0.0f, hingey = 0.0f, hingez = 0.0f, hinge2x = 0.0f, hinge2y = 0.0f, hinge2z = 0.0f, radius = 0.0f;
 	int cont = 0;
 	int cubesAdd = 0;
-	int sphereAdd = 0, sphereAdd2 = 0;
 	int rampsAdd = 0;
 
 	bool sensor;
+
+	p2DynArray<PhysBody3D*> pb_cubes;
+	p2DynArray<Cube>s_cubes;
 
 };
 

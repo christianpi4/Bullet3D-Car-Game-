@@ -21,7 +21,7 @@ public:
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
 	const vec3 GetPos() const;
-
+	btRigidBody* GetBody();
 	void SetSensor(bool is_sensor);
 
 	btRigidBody* body = nullptr;

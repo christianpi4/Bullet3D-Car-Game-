@@ -353,6 +353,18 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 	hinge->setDbgDrawSize(2.0f);
 }
 
+void ModulePhysics3D::AddConstraintSlider(PhysBody3D& bodyA, bool disable_collision)
+{
+	btTransform axis;
+	axis.setIdentity();
+	axis.setRotation(btQuaternion(0, 0, 1, 1));
+	btSliderConstraint* slider = new btSliderConstraint(*(bodyA.body), axis, true);
+	world->addConstraint(slider, disable_collision);
+	slider->setLowerLinLimit(-15);
+	slider->setUpperLinLimit(15);
+	constraints.add(slider);
+}
+
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {

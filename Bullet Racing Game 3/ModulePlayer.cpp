@@ -206,6 +206,11 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
+	{
+		ResetPlayer();
+	}
+
 	CarPos = vehicle->GetPos();
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -273,14 +278,17 @@ void  ModulePlayer::CameraFollow()
 
 void ModulePlayer::ResetPlayer()
 {
+	reset = true;
 	vehicle->SetPos(0, 0, -10);
+	vehicle->GetBody()->setAngularVelocity({ 0, 0, 0 });
+	vehicle->GetBody()->setLinearVelocity({ 0, 0, 0 });
 
 	while (bullets.count() > 0)
 	{
 		App->physics->UnloadBullet(bullets.getFirst()->data);
 		bullets.del(bullets.getFirst());
 	}
-
+	
 }
 
 

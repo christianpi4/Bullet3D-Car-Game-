@@ -12,7 +12,7 @@ struct PhysBody3D;
 #define MAX_ACCELERATION 2000.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 250.0f
-#define BULLETS 2
+#define BULLETS 10
 
 class ModulePlayer : public Module
 {
@@ -37,7 +37,7 @@ public:
 	p2List<PhysBody3D*> bullets;
 
 	bool camera = true;
-	
+	bool reset = false;
 	Sphere* proyectile[BULLETS];
 	int proyectileAdd = 0;
 
@@ -45,4 +45,5 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
+
 };
