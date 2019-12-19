@@ -27,7 +27,9 @@ public:
 	update_status Update(float dt);
 	pugi::xml_node LoadCircuit(pugi::xml_document&) const;
 	bool CleanUp();
-	void CheckPoint(const vec3 position, float rotation);
+	void CheckPoint(const vec3 position, float rotation, vec3 direction);
+	void CheckPoint2(const vec3 position, float rotation, vec3 direction);
+
 	void CreateHinges(vec3 pos, vec3 size);
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	
@@ -54,13 +56,12 @@ public:
 	//checkpoints
 	Cube cube_sensor;
 	PhysBody3D* check_p;
+	Cube cube_sensor2;
+	PhysBody3D* check_p2;
 	vec3 newpos;
 
 	bool sensor=false;
 
-
-	//p2DynArray<PhysBody3D*> check_points;
-	//p2DynArray<Cube> prim_check_points;
 	
 	Sphere* sphere_list[SPHERES];
 	Sphere* sphere_list2[SPHERES2];

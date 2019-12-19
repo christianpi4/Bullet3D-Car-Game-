@@ -96,8 +96,10 @@ bool ModuleSceneIntro::Start()
 
 	ramp = new Cube(14, 0.1, 10);
 	ramp->color = Gold;
-	ramp->SetPos(0, 1.25, 0);
-	ramp->SetRotation(-15, { 1,0,0 });
+	ramp->SetPos(-40, 1.25, 0);
+	//ramp->SetRotation(-15, { -1,0,0 });
+	ramp->SetRotation(45, { -1,-1,-1 });
+
 	Cube aux_ramp = *ramp;
 	App->physics->AddBody(aux_ramp, 0);
 
@@ -108,7 +110,9 @@ bool ModuleSceneIntro::Start()
 	Cube aux_ramp2 = *ramp2;
 	App->physics->AddBody(aux_ramp2, 0);
 
-	CheckPoint({ 0,2,20 }, 0);
+	CheckPoint({ 0,2,20 }, 0, { 0,0,1 });
+	CheckPoint2({ 0,2,97 }, -90,{0, 1, 0});
+
 
 	App->audio->PlayMusic("Audio/avicii.ogg");
 
@@ -214,13 +218,13 @@ update_status ModuleSceneIntro::Update(float dt)
 }
 
 
-void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation)
+void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation, vec3 direction)
 {
 	cube_sensor.size.x = 10;
 	cube_sensor.size.y = 4;
 	cube_sensor.size.z = 1;
 	cube_sensor.SetPos(pos.x, pos.y, pos.z);
-	cube_sensor.SetRotation(rotation, { 0,0,1 });
+	cube_sensor.SetRotation(rotation, direction);
 	check_p = App->physics->AddBody(cube_sensor, 0);
 	check_p->GetTransform(&cube_sensor.transform);
 	check_p->SetSensor(true);
@@ -228,10 +232,25 @@ void ModuleSceneIntro::CheckPoint(const vec3 pos, float rotation)
 	check_p->is_sensor = true;
 }
 
+void ModuleSceneIntro::CheckPoint2(const vec3 pos, float rotation, vec3 direction)
+{
+	cube_sensor2.size.x = 10;
+	cube_sensor2.size.y = 4;
+	cube_sensor2.size.z = 1;
+	cube_sensor2.SetPos(pos.x, pos.y, pos.z);
+	cube_sensor2.SetRotation(rotation, direction);
+	check_p2 = App->physics->AddBody(cube_sensor2, 0);
+	check_p2->GetTransform(&cube_sensor2.transform);
+	check_p2->SetSensor(true);
+	check_p2->collision_listeners.add(this);
+	check_p2->is_sensor = true;
+}
+
+
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1 ==check_p && body2 == (PhysBody3D*)App->player->vehicle)
+	if ((body1 ==check_p||body1==check_p2)&& body2 == (PhysBody3D*)App->player->vehicle)
 	{
 
 		LOG("PASA");
