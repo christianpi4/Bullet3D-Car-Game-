@@ -7,7 +7,7 @@ class btRigidBody;
 class Module;
 class vec3;
 class Primitive;
-
+class btQuaternion;
 // =================================================
 struct PhysBody3D
 {
@@ -23,7 +23,7 @@ public:
 	const vec3 GetPos() const;
 	btRigidBody* GetBody();
 	void SetSensor(bool is_sensor);
-
+	void SetRotation(btQuaternion orientation);
 	btRigidBody* body = nullptr;
 
 	bool is_sensor;

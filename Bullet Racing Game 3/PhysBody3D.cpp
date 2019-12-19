@@ -82,3 +82,10 @@ btRigidBody* PhysBody3D::GetBody()
 {
 	return body;
 }
+
+void PhysBody3D::SetRotation(btQuaternion orientation)
+{
+	btTransform t = body->getWorldTransform();
+	t.setRotation(orientation);
+	body->setWorldTransform(t);
+}

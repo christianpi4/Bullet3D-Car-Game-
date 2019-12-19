@@ -144,77 +144,72 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 
-	if (App->player->reset == true) {
-		App->audio->CleanUp();
-		App->audio->Start();
-		App->player->reset == false;
-	}
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
 	Cube floor(600, 2, 600);
 	floor.SetPos(0, -1, 0);
-floor.color = Cyan;
-floor.Render();
+	floor.color = Cyan;
+	floor.Render();
 
-Cube roof(600, 2, 600);
-roof.SetPos(0, 100, 0);
-roof.color = Cyan;
-roof.Render();
+	Cube roof(600, 2, 600);
+	roof.SetPos(0, 100, 0);
+	roof.color = Cyan;
+	roof.Render();
 
-Cube wall_left(2, 100, 600);
-wall_left.SetPos(-300, 50, 0);
-wall_left.color = Cyan;
-wall_left.Render();
+	Cube wall_left(2, 100, 600);
+	wall_left.SetPos(-300, 50, 0);
+	wall_left.color = Cyan;
+	wall_left.Render();
 
-Cube wall_right(2, 100, 600);
-wall_right.SetPos(300, 50, 0);
-wall_right.color = Cyan;
-wall_right.Render();
+	Cube wall_right(2, 100, 600);
+	wall_right.SetPos(300, 50, 0);
+	wall_right.color = Cyan;
+	wall_right.Render();
 
-Cube wall_front(600, 100, 2);
-wall_front.SetPos(0, 50, -300);
-wall_front.color = Cyan;
-wall_front.Render();
+	Cube wall_front(600, 100, 2);
+	wall_front.SetPos(0, 50, -300);
+	wall_front.color = Cyan;
+	wall_front.Render();
 
-Cube wall_back(600, 100, 2);
-wall_back.SetPos(0, 50, 300);
-wall_back.color = Cyan;
-wall_back.Render();
+	Cube wall_back(600, 100, 2);
+	wall_back.SetPos(0, 50, 300);
+	wall_back.color = Cyan;
+	wall_back.Render();
 
-if (pb_cubes.Count() != 0 && s_cubes.Count() != 0 && s_cubes.Count() == pb_cubes.Count()) {
-	for (int i = 0; i < s_cubes.Count(); i++) {
-		pb_cubes[i]->GetTransform(&s_cubes[i].transform);
-		s_cubes[i].Render();
+	if (pb_cubes.Count() != 0 && s_cubes.Count() != 0 && s_cubes.Count() == pb_cubes.Count()) {
+		for (int i = 0; i < s_cubes.Count(); i++) {
+			pb_cubes[i]->GetTransform(&s_cubes[i].transform);
+			s_cubes[i].Render();
+		}
+
 	}
 
-}
+	for (int i = 0; i < CUBES; i++) {
 
-for (int i = 0; i < CUBES; i++) {
-
-	if (map_list[i] != nullptr)
-	{
-		map_list[i]->Render();
+		if (map_list[i] != nullptr)
+		{
+			map_list[i]->Render();
+		}
 	}
-}
 
-ramp->Render();
-ramp2->Render();
-
+	ramp->Render();
+	ramp2->Render();
 
 
-float race_time = 0;
 
-if (App->T.d == false) {
-	race_time = App->T.Read();
-	race_time = race_time / 1000.0f;
-}
+	float race_time = 0;
 
-char title[80];
-sprintf_s(title, "Velocity: %.1f Km/h Time: %.2f Current lap: %i", App->player->vehicle->GetKmh(), race_time, lap);
-App->window->SetTitle(title);
+	if (App->T.d == false) {
+		race_time = App->T.Read();
+		race_time = race_time / 1000.0f;
+	}
 
-return UPDATE_CONTINUE;
+	char title[80];
+	sprintf_s(title, "Velocity: %.1f Km/h Time: %.2f Current lap: %i", App->player->vehicle->GetKmh(), race_time, lap);
+	App->window->SetTitle(title);
+
+	return UPDATE_CONTINUE;
 }
 
 
@@ -254,6 +249,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		newpos = App->player->vehicle->GetPos();
 		sensor = true;
+		LOG("PASA");
 		
 	}
 	if (body1 == check_p) {

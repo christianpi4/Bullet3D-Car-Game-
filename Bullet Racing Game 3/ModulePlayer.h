@@ -36,7 +36,6 @@ public:
 	vec3 CarPos;
 
 	p2List<PhysBody3D*> bullets;
-
 	bool camera = true;
 	bool reset = false;
 	Sphere* proyectile[BULLETS];

@@ -130,6 +130,8 @@ bool ModulePlayer::Start()
 	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 0, 12);
+	btQuaternion orientation = { 0, 0, 0, -1 };
+	vehicle->SetRotation(orientation);
 
 	return true;
 }
@@ -210,12 +212,22 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
 	{
-		ResetPlayer();
+		if(restart==false){
+			ResetPlayer();
+		}
+		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		vehicle->SetPos(App->scene_intro->newpos.x, App->scene_intro->newpos.y, App->scene_intro->newpos.z);
-		acceleration = 0.0f;
-		brake = BRAKE_POWER * 100;
+		
+		restart = true;
+
+		if (restart == true) {
+			vehicle->SetPos(App->scene_intro->newpos.x, App->scene_intro->newpos.y, App->scene_intro->newpos.z);
+			acceleration = 0.0f;
+			brake = BRAKE_POWER * 100;
+			restart = false;
+		}
+
 	}
 
 	CarPos = vehicle->GetPos();
@@ -236,7 +248,6 @@ update_status ModulePlayer::Update(float dt)
 		bullet.SetPos(pos.x, pos.y, pos.z);
 		bullet.Render();
 	}
-
 
 	vehicle->Render();
 
@@ -273,9 +284,9 @@ void  ModulePlayer::CameraFollow()
 {
 
 	CamD = { -9.0f, 5.0f, -9.0f };
-	vec3 forwardVector = vehicle->ForwardVector();
-	vec3 NewCameraPosition = { CarPos.x + (forwardVector.x * CamD.x), CarPos.y + (forwardVector.y + CamD.y), CarPos.z + (forwardVector.z * CamD.z) };
-	vec3 CamPos = App->camera->Position + (NewCameraPosition - App->camera->Position);
+	vec3 fvector = vehicle->ForwardVector();
+	vec3 NCam = { CarPos.x + (fvector.x * CamD.x), CarPos.y + (fvector.y + CamD.y), CarPos.z + (fvector.z * CamD.z) };
+	vec3 CamPos = App->camera->Position + (NCam - App->camera->Position);
 
 	App->camera->Look(CamPos, CarPos);
 }
@@ -284,8 +295,12 @@ void ModulePlayer::ResetPlayer()
 {
 	reset = true;
 	vehicle->SetPos(0, 0, -10);
+	btQuaternion orientation = { 0, 0, 0, 1 };
+	vehicle->SetRotation(orientation);
+
 	vehicle->GetBody()->setAngularVelocity({ 0, 0, 0 });
 	vehicle->GetBody()->setLinearVelocity({ 0, 0, 0 });
+	
 
 	while (bullets.count() > 0)
 	{
