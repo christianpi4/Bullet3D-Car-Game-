@@ -236,7 +236,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	//CameraFollow();
+	CameraFollow();
 
 	for (int i = 0; i < bullets.count(); i++)
 	{
@@ -294,7 +294,7 @@ void  ModulePlayer::CameraFollow()
 
 void ModulePlayer::ResetPlayer()
 {
-	reset = true;
+
 	vehicle->SetPos(0, 0, -10);
 	btQuaternion orientation = { 0, 0, 0, 1 };
 	vehicle->SetRotation(orientation);
